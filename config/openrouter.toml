@@ -1,4 +1,5 @@
 # OpenRouter Configuration for Codex CLI
+# recommended_agent: debugger
 model_provider = "openrouter"
 model = "google/gemini-2.5-flash:free" # Default fallback-friendly model
 

@@ -1,5 +1,6 @@
 # Codex Profile: local
 # Runs entirely offline with Local Ollama models
+# recommended_agent: backend
 
 model_provider = "ollama"
 model = "qwen2.5-coder:7b"

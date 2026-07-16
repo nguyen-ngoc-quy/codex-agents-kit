@@ -1,4 +1,5 @@
 # Ollama Configuration for Codex CLI
+# recommended_agent: backend
 model_provider = "ollama"
 model = "qwen2.5-coder:7b"       # Suggested coding model. Replace with your pulled model.
 

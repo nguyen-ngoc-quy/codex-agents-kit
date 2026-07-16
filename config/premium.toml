@@ -1,5 +1,6 @@
 # Codex Profile: premium
 # Uses OpenRouter Premium API (or direct OpenAI/Anthropic)
+# recommended_agent: architect
 
 model_provider = "openrouter"
 model = "anthropic/claude-3.5-sonnet" # Standard coding benchmark

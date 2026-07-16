@@ -48,3 +48,10 @@ MODEL=$(grep -E '^model[[:space:]]*=[[:space:]]*' "$CONFIG_FILE" | head -n1 | cu
 
 echo "Provider: $PROVIDER"
 echo "Model   : $MODEL"
+
+# Check for recommended agent
+RECOMMENDED_AGENT=$(grep -E '^# recommended_agent:' "$PROFILE_FILE" | head -n1 | sed 's/.*: //')
+if [ -n "$RECOMMENDED_AGENT" ]; then
+    echo ""
+    echo "💡 Tip: Run 'codex agent $RECOMMENDED_AGENT' to load the recommended agent for this profile."
+fi

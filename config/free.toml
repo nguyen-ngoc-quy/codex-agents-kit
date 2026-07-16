@@ -1,5 +1,6 @@
 # Codex Profile: free
 # Uses OpenRouter Free API with auto-fallback
+# recommended_agent: debugger
 
 model_provider = "openrouter"
 model = "qwen/qwen-2.5-coder-32b-instruct:free"

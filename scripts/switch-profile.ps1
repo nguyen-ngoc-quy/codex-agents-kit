@@ -55,3 +55,11 @@ if ($tomlContent -match 'model_provider\s*=\s*"([^"]+)"') { $provider = $Matches
 
 Write-Host "Provider: $provider" -ForegroundColor Yellow
 Write-Host "Model   : $model" -ForegroundColor Yellow
+
+# Check for recommended agent
+$profileFileContent = Get-Content $profileFile -Raw
+if ($profileFileContent -match '# recommended_agent:\s*(\S+)') {
+    $recommendedAgent = $Matches[1]
+    Write-Host ""
+    Write-Host "💡 Tip: Run 'codex agent $recommendedAgent' to load the recommended agent for this profile." -ForegroundColor Cyan
+}
