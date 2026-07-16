@@ -1,0 +1,11 @@
+.vscodeignore
+node_modules/
+.git/
+.github/
+scripts/
+config/
+prompts/
+agents/
+mcp/
+docs/
+bin/

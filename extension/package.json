@@ -1,0 +1,80 @@
+{
+  "name": "codex-cli-ultimate",
+  "displayName": "Codex CLI Ultimate",
+  "description": "Run Codex CLI Ultimate commands from VS Code — switch profiles, init projects, run diagnostics, and more.",
+  "version": "0.1.5",
+  "publisher": "nguyen-ngoc-quy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nguyen-ngoc-quy/codex-cli-ultimate"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codex-cli-ultimate.doctor",
+        "title": "Codex: Run Diagnostics (doctor)"
+      },
+      {
+        "command": "codex-cli-ultimate.profile",
+        "title": "Codex: Switch Profile..."
+      },
+      {
+        "command": "codex-cli-ultimate.benchmark",
+        "title": "Codex: Run Benchmark"
+      },
+      {
+        "command": "codex-cli-ultimate.init",
+        "title": "Codex: Init New Project..."
+      },
+      {
+        "command": "codex-cli-ultimate.agent",
+        "title": "Codex: Load Agent..."
+      },
+      {
+        "command": "codex-cli-ultimate.update",
+        "title": "Codex: Update Configs & Prompts"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "codex-cli-ultimate.init",
+          "group": "codex"
+        },
+        {
+          "command": "codex-cli-ultimate.doctor",
+          "group": "codex"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "codex-cli-ultimate.doctor"
+        },
+        {
+          "command": "codex-cli-ultimate.profile"
+        },
+        {
+          "command": "codex-cli-ultimate.benchmark"
+        },
+        {
+          "command": "codex-cli-ultimate.init"
+        },
+        {
+          "command": "codex-cli-ultimate.agent"
+        },
+        {
+          "command": "codex-cli-ultimate.update"
+        }
+      ]
+    }
+  }
+}
