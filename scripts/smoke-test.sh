@@ -108,6 +108,9 @@ check ".gitignore exists" test -f "$ROOT/.gitignore"
 check ".editorconfig exists" test -f "$ROOT/.editorconfig"
 check "VERSION exists" test -f "$ROOT/VERSION"
 check "CI workflow exists" test -f "$ROOT/.github/workflows/validate.yml"
+check "Bug report template exists" test -f "$ROOT/.github/ISSUE_TEMPLATE/bug_report.md"
+check "Feature request template exists" test -f "$ROOT/.github/ISSUE_TEMPLATE/feature_request.md"
+check "PR template exists" test -f "$ROOT/.github/PULL_REQUEST_TEMPLATE.md"
 check "CONTRIBUTING.md exists" test -f "$ROOT/CONTRIBUTING.md"
 
 # ══════════════════════════════════════════════════════════════
