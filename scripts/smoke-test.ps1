@@ -107,7 +107,7 @@ foreach ($prompt in $promptFiles) {
 # -------------------------------------------------------
 Write-Host "--- Script Files ---" -ForegroundColor Yellow
 
-$scripts = @("install", "switch-profile", "doctor", "benchmark", "update", "init-project", "load-agent", "smoke-test")
+$scripts = @("install", "switch-profile", "doctor", "benchmark", "update", "init-project", "load-agent", "smoke-test", "fetch-docs")
 foreach ($script in $scripts) {
     $path = Join-Path (Join-Path $root "scripts") "$script.ps1"
     Test-Check "  $script.ps1 exists" { Test-Path $path } -Critical $true
@@ -130,6 +130,7 @@ Test-Check "  bin/codex.ps1 dispatches profile" { $wrapperContent -match '"profi
 Test-Check "  bin/codex.ps1 dispatches doctor" { $wrapperContent -match '"doctor"' }
 Test-Check "  bin/codex.ps1 dispatches init" { $wrapperContent -match '"init"' }
 Test-Check "  bin/codex.ps1 dispatches agent" { $wrapperContent -match '"agent"' }
+Test-Check "  bin/codex.ps1 dispatches fetch-docs" { $wrapperContent -match '"fetch-docs"' }
 
 # -------------------------------------------------------
 # 7. Documentation

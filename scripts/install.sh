@@ -104,6 +104,7 @@ case "\${1:-}" in
     benchmark) dispatch benchmark ;;
     init)      dispatch init-project "$2" "$3";;
     agent)     dispatch load-agent "$2" ;;
+	    fetch-docs) dispatch fetch-docs "$2" ;;
     *)
         if [ -z "\$CODEX_EXE" ] || [ ! -x "\$CODEX_EXE" ]; then
             echo "❌ codex not found. Install Codex CLI or set CODEX_EXE." >&2

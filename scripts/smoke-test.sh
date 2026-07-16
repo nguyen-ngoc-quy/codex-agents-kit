@@ -79,7 +79,7 @@ done
 # ══════════════════════════════════════════════════════════════
 echo "--- Script Files ---"
 
-for SCRIPT in install switch-profile doctor benchmark update init-project load-agent smoke-test; do
+for SCRIPT in install switch-profile doctor benchmark update init-project load-agent smoke-test fetch-docs; do
     check "scripts/$SCRIPT.sh exists" test -f "$ROOT/scripts/$SCRIPT.sh"
     check "scripts/$SCRIPT.sh is executable" test -x "$ROOT/scripts/$SCRIPT.sh"
 done

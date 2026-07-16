@@ -142,6 +142,7 @@ if (`$RemainingArgs.Count -gt 0) {
         "benchmark" { Invoke-Script "benchmark" }
         "init"      { Invoke-Script "init-project" }
         "agent"     { Invoke-Script "load-agent" }
+        "fetch-docs" { Invoke-Script "fetch-docs" }
         default {
             if (-not `$CodexExe -or -not (Test-Path `$CodexExe)) {
                 Write-Host "❌ codex.exe not found. Install Codex CLI or set CODEX_CLI_PATH." -ForegroundColor Red
