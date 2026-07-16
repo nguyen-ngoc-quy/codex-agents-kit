@@ -1,4 +1,4 @@
-// Codex CLI Ultimate — VS Code Extension
+// Codex Agents Kit — VS Code Extension
 // Run Codex CLI commands from the Command Palette and context menus.
 
 const vscode = require('vscode');
@@ -14,7 +14,7 @@ function findCodexRoot() {
     if (!workspaceFolders) return null;
 
     const root = workspaceFolders[0].uri.fsPath;
-    // Check if we're in the codex-cli-ultimate repo
+    // Check if we're in the codex-agents-kit repo
     if (require('fs').existsSync(path.join(root, 'bin', 'codex.ps1'))) {
         return root;
     }
@@ -57,7 +57,7 @@ function activate(context) {
     const codexRoot = findCodexRoot();
     if (!codexRoot) {
         vscode.window.showWarningMessage(
-            'Codex CLI Ultimate not found. Open a folder inside the codex-cli-ultimate project.'
+            'Codex Agents Kit not found. Open a folder inside the codex-agents-kit project.'
         );
         return;
     }
@@ -68,12 +68,12 @@ function activate(context) {
 
     // ── Register Commands ──────────────────────────────────────
 
-    const doctorCmd = vscode.commands.registerCommand('codex-cli-ultimate.doctor', () => {
+    const doctorCmd = vscode.commands.registerCommand('codex-agents-kit.doctor', () => {
         const script = path.join(codexRoot, 'scripts', `doctor${scriptExt}`);
         runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}"`, 'doctor');
     });
 
-    const profileCmd = vscode.commands.registerCommand('codex-cli-ultimate.profile', async () => {
+    const profileCmd = vscode.commands.registerCommand('codex-agents-kit.profile', async () => {
         const profiles = ['free', 'premium', 'local', 'ollama', 'openrouter'];
         const selected = await vscode.window.showQuickPick(profiles, {
             placeHolder: 'Select a Codex profile to switch to'
@@ -84,12 +84,12 @@ function activate(context) {
         }
     });
 
-    const benchmarkCmd = vscode.commands.registerCommand('codex-cli-ultimate.benchmark', () => {
+    const benchmarkCmd = vscode.commands.registerCommand('codex-agents-kit.benchmark', () => {
         const script = path.join(codexRoot, 'scripts', `benchmark${scriptExt}`);
         runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}"`, 'benchmark');
     });
 
-    const initCmd = vscode.commands.registerCommand('codex-cli-ultimate.init', async () => {
+    const initCmd = vscode.commands.registerCommand('codex-agents-kit.init', async () => {
         const name = await promptForInput('Project name');
         if (name) {
             const templates = ['basic', 'aspnet', 'flutter'];
@@ -102,7 +102,7 @@ function activate(context) {
         }
     });
 
-    const agentCmd = vscode.commands.registerCommand('codex-cli-ultimate.agent', async () => {
+    const agentCmd = vscode.commands.registerCommand('codex-agents-kit.agent', async () => {
         const agents = ['architect', 'backend', 'frontend', 'devops', 'reviewer', 'debugger', 'tester'];
         const selected = await vscode.window.showQuickPick(agents, {
             placeHolder: 'Select an agent to load'
@@ -113,7 +113,7 @@ function activate(context) {
         }
     });
 
-    const updateCmd = vscode.commands.registerCommand('codex-cli-ultimate.update', () => {
+    const updateCmd = vscode.commands.registerCommand('codex-agents-kit.update', () => {
         const script = path.join(codexRoot, 'scripts', `update${scriptExt}`);
         runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}"`, 'update');
     });

@@ -1,13 +1,13 @@
 {
-  "name": "codex-cli-ultimate",
-  "displayName": "Codex CLI Ultimate",
+  "name": "codex-agents-kit",
+  "displayName": "Codex Agents Kit",
   "description": "Run Codex CLI Ultimate commands from VS Code — switch profiles, init projects, run diagnostics, and more.",
   "version": "0.1.5",
   "publisher": "nguyen-ngoc-quy",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nguyen-ngoc-quy/codex-cli-ultimate"
+    "url": "https://github.com/nguyen-ngoc-quy/codex-agents-kit"
   },
   "engines": {
     "vscode": "^1.80.0"
@@ -20,59 +20,59 @@
   "contributes": {
     "commands": [
       {
-        "command": "codex-cli-ultimate.doctor",
+        "command": "codex-agents-kit.doctor",
         "title": "Codex: Run Diagnostics (doctor)"
       },
       {
-        "command": "codex-cli-ultimate.profile",
+        "command": "codex-agents-kit.profile",
         "title": "Codex: Switch Profile..."
       },
       {
-        "command": "codex-cli-ultimate.benchmark",
+        "command": "codex-agents-kit.benchmark",
         "title": "Codex: Run Benchmark"
       },
       {
-        "command": "codex-cli-ultimate.init",
+        "command": "codex-agents-kit.init",
         "title": "Codex: Init New Project..."
       },
       {
-        "command": "codex-cli-ultimate.agent",
+        "command": "codex-agents-kit.agent",
         "title": "Codex: Load Agent..."
       },
       {
-        "command": "codex-cli-ultimate.update",
+        "command": "codex-agents-kit.update",
         "title": "Codex: Update Configs & Prompts"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "codex-cli-ultimate.init",
+          "command": "codex-agents-kit.init",
           "group": "codex"
         },
         {
-          "command": "codex-cli-ultimate.doctor",
+          "command": "codex-agents-kit.doctor",
           "group": "codex"
         }
       ],
       "commandPalette": [
         {
-          "command": "codex-cli-ultimate.doctor"
+          "command": "codex-agents-kit.doctor"
         },
         {
-          "command": "codex-cli-ultimate.profile"
+          "command": "codex-agents-kit.profile"
         },
         {
-          "command": "codex-cli-ultimate.benchmark"
+          "command": "codex-agents-kit.benchmark"
         },
         {
-          "command": "codex-cli-ultimate.init"
+          "command": "codex-agents-kit.init"
         },
         {
-          "command": "codex-cli-ultimate.agent"
+          "command": "codex-agents-kit.agent"
         },
         {
-          "command": "codex-cli-ultimate.update"
+          "command": "codex-agents-kit.update"
         }
       ]
     }

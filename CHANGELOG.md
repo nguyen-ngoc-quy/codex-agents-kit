@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **scripts/smoke-test.ps1**: Expanded from 83 to 118 checks
 - **README.md**: Updated profile list (5 profiles), added English docs table, updated available commands
 - **docs/en/**: 9 new English documentation files
+- **Repo rename**: `codex-cli-ultimate` → `codex-agents-kit`. Updated all GitHub URL references, VS Code extension IDs, README tree, and CONTRIBUTING.md clone URL.
 
 ## [0.1.5] - 2026-07-16
 ### Added
