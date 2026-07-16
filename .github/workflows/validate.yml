@@ -132,14 +132,27 @@ except Exception as e:
             Write-Host "All PowerShell scripts pass analysis" -ForegroundColor Green
           '
 
+  # ── Smoke test ────────────────────────────────────────────────
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run smoke test (Bash)
+        run: |
+          chmod +x ./scripts/smoke-test.sh
+          ./scripts/smoke-test.sh
+
   # ── Cross-platform install test ───────────────────────────────
   install-test:
-    name: Install Test
+    name: Install Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    needs: smoke-test
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 

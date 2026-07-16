@@ -1,0 +1,53 @@
+# Auto-release workflow for Codex CLI Ultimate
+# Creates a GitHub Release when a version tag is pushed.
+# Tags follow semver: v0.1.6, v0.2.0, v1.0.0, etc.
+
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: version
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          # Extract changelog section for this version
+          TAG="${{ steps.version.outputs.tag }}"
+          VERSION="${TAG#v}"
+          if grep -q "## \[$VERSION\]" CHANGELOG.md; then
+            # Extract the section between this version header and the next
+            awk -v ver="[$VERSION]" '/^## / { if (found) { exit } if ($0 ~ ver) { found=1; next } } found { print }' CHANGELOG.md > _release_notes.md
+            if [ ! -s _release_notes.md ]; then
+              echo "No content extracted, using fallback"
+              echo "Release $TAG" > _release_notes.md
+            fi
+          else
+            echo "Release $TAG" > _release_notes.md
+          fi
+          echo "notes_file=_release_notes.md" >> "$GITHUB_OUTPUT"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          body_path: ${{ steps.notes.outputs.notes_file }}
+          draft: false
+          prerelease: false

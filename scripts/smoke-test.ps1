@@ -158,6 +158,7 @@ Test-Check "  .gitignore exists" { Test-Path (Join-Path $root ".gitignore") }
 Test-Check "  .editorconfig exists" { Test-Path (Join-Path $root ".editorconfig") }
 Test-Check "  VERSION file exists" { Test-Path (Join-Path $root "VERSION") }
 Test-Check "  CI workflow exists" { Test-Path (Join-Path $root ".github\workflows\validate.yml") }
+Test-Check "  Release workflow exists" { Test-Path (Join-Path $root ".github\workflows\release.yml") }
 Test-Check "  Bug report template exists" { Test-Path (Join-Path $root ".github\ISSUE_TEMPLATE\bug_report.md") }
 Test-Check "  Feature request template exists" { Test-Path (Join-Path $root ".github\ISSUE_TEMPLATE\feature_request.md") }
 Test-Check "  PR template exists" { Test-Path (Join-Path $root ".github\PULL_REQUEST_TEMPLATE.md") }
