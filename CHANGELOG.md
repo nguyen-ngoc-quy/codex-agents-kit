@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.6] - 2026-07-16
+### Added
+- **P6.1 — Bilingual documentation**: Created `docs/en/` with full English translations of all 9 docs (Installation, Profiles, MCP, Agents, FAQ, Benchmark, Init, Prompt-Library, README). Language switcher in root README.
+- **P6.2 — GitHub Issue/PR Templates**: `ISSUE_TEMPLATE/bug_report.md`, `feature_request.md`, `config.yml`, and `PULL_REQUEST_TEMPLATE.md` with structured forms and cross-platform checklist.
+- **P6.3 — CI Expansion**: Added smoke-test job to CI workflow (runs `smoke-test.sh`). Added macOS (`macos-latest`) to install-test matrix. New `release.yml` workflow auto-creates GitHub Release on tag push (extracts changelog from CHANGELOG.md).
+- **P6.4 — Context7 Auto-Fetch**: `scripts/fetch-docs.ps1` + `scripts/fetch-docs.sh` — downloads framework docs (ASP.NET, Flutter, Unity) for offline AI context. Registered as `codex fetch-docs <framework>`.
+- **P6.5 — Agent Injection vào Profiles**: Added `# recommended_agent:` to all 5 TOML profiles. `switch-profile` scripts now detect and display the recommended agent after switching.
+- **P6.6 — Prompt Versioning**: Added `> Version: 0.1.5 | Last updated: 2026-07-16` headers to all 11 prompt files and 7 agent files. Smoke tests validate version headers exist.
+- **P6.7 — VSCode Extension (scaffold)**: Basic extension with 6 commands (doctor, profile switch, benchmark, init, agent, update) — accessible via Command Palette and Explorer context menu.
+
+### Changed
+- **scripts/smoke-test.sh**: Expanded from 76 to 91 checks
+- **scripts/smoke-test.ps1**: Expanded from 83 to 118 checks
+- **README.md**: Updated profile list (5 profiles), added English docs table, updated available commands
+- **docs/en/**: 9 new English documentation files
+
 ## [0.1.5] - 2026-07-16
 ### Added
 - **P5.1 — Agent integration**: New `codex agent <name>` sub-command in all wrappers. `load-agent.ps1` and `load-agent.sh` extract System Instructions from `agents/<name>.md` and output formatted prompts for Codex CLI. Supports 7 agent roles.

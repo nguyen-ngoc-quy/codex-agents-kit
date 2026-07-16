@@ -26,8 +26,8 @@ Bản lộ trình phát triển và hoàn thiện Codex CLI Ultimate Starter Kit
 
 ### v0.4 — Prompt Library ⚡
 - [x] Phát triển các prompt mẫu cho ASP.NET, Flutter, Unity, SQL, Docker & DevOps, Clean Code, Testing.
-- [ ] Bổ sung prompt cho React/Next.js, Python/Django, Go.
-- [ ] Áp dụng prompt versioning và tự động cập nhật từ repo.
+- [x] Bổ sung prompt cho React/Next.js, Python/Django, Go.
+- [x] Áp dụng prompt versioning và tự động cập nhật từ repo.
 
 ### v0.5 — Automation & Benchmark
 - [x] Tạo script `benchmark.ps1` / `benchmark.sh` đo lường hiệu năng của các model.
@@ -35,13 +35,13 @@ Bản lộ trình phát triển và hoàn thiện Codex CLI Ultimate Starter Kit
 - [x] Tạo tool `codex init` để khởi tạo project nhanh.
 
 ### v0.8 — VSCode Extension
-- [ ] Tạo VSCode Extension cung cấp menu chuột phải.
-- [ ] Tích hợp Command Palette chạy các script Codex nhanh chóng.
+- [x] Tạo VSCode Extension cung cấp menu chuột phải (scaffold).
+- [x] Tích hợp Command Palette chạy các script Codex nhanh chóng (scaffold).
 
 ### v1.0 — Official Release
-- [ ] Hoàn thiện hệ thống tài liệu song ngữ (EN + VI).
-- [ ] Smoke test trên Windows, Linux, macOS.
-- [ ] Đóng gói và phát hành chính thức bản v1.0.
+- [x] Hoàn thiện hệ thống tài liệu song ngữ (EN + VI).
+- [x] Smoke test trên Windows, Linux, macOS (CI).
+- [x] Đóng gói và phát hành chính thức bản v0.1.6.
 
 ---
 
