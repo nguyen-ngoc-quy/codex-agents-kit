@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # Clean Code & Refactoring Prompts
 
 Thư viện prompt giúp tái cấu trúc code (Refactor), áp dụng nguyên lý Clean Code để tăng tính mạch lạc, dễ đọc.

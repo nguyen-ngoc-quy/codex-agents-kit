@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # ASP.NET Core Prompts
 
 Đây là thư viện prompt tối ưu dành cho việc phát triển phần mềm bằng **ASP.NET Core**, tuân thủ Clean Architecture và các best practices.

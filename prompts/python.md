@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # Python & Django Prompts
 
 Thư viện prompt tối ưu cho phát triển ứng dụng Python với **Django** và **FastAPI**, tuân thủ Python best practices.

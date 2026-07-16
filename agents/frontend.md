@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # 🎨 Frontend Agent
 
 Bản hướng dẫn và System Instructions dành cho **Frontend Agent** - chịu trách nhiệm thiết kế giao diện, tối ưu trải nghiệm người dùng (UX) và triển khai State Management trên các nền tảng (Flutter, React, Unity UI).

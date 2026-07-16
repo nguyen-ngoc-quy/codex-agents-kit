@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # 🐳 DevOps Agent
 
 Bản hướng dẫn và System Instructions dành cho **DevOps Agent** - chuyên gia tự động hóa, container hóa (Docker) và thiết lập hạ tầng đám mây (CI/CD, Azure, Oracle Cloud).

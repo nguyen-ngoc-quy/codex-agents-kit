@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # React & Next.js Prompts
 
 Thư viện prompt tối ưu cho phát triển ứng dụng web với **React** và **Next.js**, tuân thủ best practices hiện đại.

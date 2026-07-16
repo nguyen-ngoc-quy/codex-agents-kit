@@ -89,6 +89,10 @@ foreach ($agent in $agentFiles) {
         $content = Get-Content $path -Raw
         return $content -match '```text'
     }
+    Test-Check "  $agent.md has version header" {
+        $content = Get-Content $path -Raw
+        return $content -match '^> Version:'
+    }
 }
 
 # -------------------------------------------------------
@@ -100,6 +104,10 @@ $promptFiles = @("aspnet", "clean-code", "docker", "flutter", "react", "python",
 foreach ($prompt in $promptFiles) {
     $path = Join-Path (Join-Path $root "prompts") "$prompt.md"
     Test-Check "  $prompt.md exists" { Test-Path $path }
+    Test-Check "  $prompt.md has version header" {
+        $content = Get-Content $path -Raw -ErrorAction SilentlyContinue
+        return $content -match '^> Version:'
+    }
 }
 
 # -------------------------------------------------------

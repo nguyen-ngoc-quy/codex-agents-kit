@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # 🐛 Debugger Agent
 
 Bản hướng dẫn và System Instructions dành cho **Debugger Agent** - chuyên gia săn lỗi, chuẩn đoán lỗi crash và đưa ra phương án sửa lỗi nhanh chóng.

@@ -63,6 +63,7 @@ echo "--- Agent Files ---"
 for AGENT in architect backend debugger devops frontend reviewer tester; do
     check "agents/$AGENT.md exists" test -f "$ROOT/agents/$AGENT.md"
     check "agents/$AGENT.md has instructions" grep -q '```text' "$ROOT/agents/$AGENT.md" 2>/dev/null
+    check "agents/$AGENT.md has version header" grep -q "^> Version:" "$ROOT/agents/$AGENT.md" 2>/dev/null
 done
 
 # ══════════════════════════════════════════════════════════════
@@ -72,6 +73,7 @@ echo "--- Prompt Files ---"
 
 for PROMPT in aspnet clean-code docker flutter react python go review sql testing unity; do
     check "prompts/$PROMPT.md exists" test -f "$ROOT/prompts/$PROMPT.md"
+    check "prompts/$PROMPT.md has version header" grep -q "^> Version:" "$ROOT/prompts/$PROMPT.md"
 done
 
 # ══════════════════════════════════════════════════════════════

@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # Code Review Prompts
 
 Thư viện prompt dành cho việc Review Code tự động, phát hiện lỗi bảo mật, lỗ hổng hiệu năng và vi phạm Coding Convention.

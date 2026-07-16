@@ -1,3 +1,4 @@
+> Version: 0.1.5 | Last updated: 2026-07-16
 # 🧪 Tester Agent
 
 Bản hướng dẫn và System Instructions dành cho **Tester Agent** - chịu trách nhiệm thiết kế kịch bản test, viết Unit Test, Integration Test và đo hiệu năng (Benchmark).
