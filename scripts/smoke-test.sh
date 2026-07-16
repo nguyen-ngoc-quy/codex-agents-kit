@@ -91,9 +91,11 @@ echo "--- Documentation ---"
 
 for DOC in Installation Profiles MCP Agents Prompt-Library Benchmark FAQ Init; do
     check "docs/$DOC.md exists" test -f "$ROOT/docs/$DOC.md"
+    check "docs/en/$DOC.md exists" test -f "$ROOT/docs/en/$DOC.md"
 done
 
 check "README.md exists" test -f "$ROOT/README.md"
+check "docs/en/README.md exists" test -f "$ROOT/docs/en/README.md"
 check "CHANGELOG.md exists" test -f "$ROOT/CHANGELOG.md"
 check "LICENSE exists" test -f "$ROOT/LICENSE"
 check "ROADMAP.md exists" test -f "$ROOT/ROADMAP.md"

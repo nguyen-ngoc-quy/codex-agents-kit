@@ -3,23 +3,22 @@
 > **A complete Starter Kit for OpenAI Codex CLI** — powered by OpenRouter, local LLMs (Ollama), MCP servers, and custom AI agents.
 > Designed to deliver a Claude Code–like experience with **free** and **offline** options.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Codex Version](https://img.shields.io/badge/Codex-CLI-blue.svg)](https://openai.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-**🌐 Language / Ngôn ngữ:** [English](docs/en/README.md) | [Tiếng Việt](README.md)
+**🌐 Language / Ngôn ngữ:** [English](README.md) | [Tiếng Việt](../../README.md)
 
 ---
 
-## 🌟 Giới thiệu (Introduction)
+## 🌟 Introduction
 
-**Codex CLI Ultimate** là bộ Starter Kit tối ưu hóa cấu hình và môi trường cho Codex CLI, giúp lập trình viên tiếp cận coding agent mạnh mẽ với chi phí **0đ** thông qua OpenRouter Free hoặc Local LLM (Ollama), đồng thời dễ dàng chuyển đổi sang các mô hình Premium (GPT-4o, Claude).
+**Codex CLI Ultimate** is a Starter Kit that optimizes configuration and environment for Codex CLI, giving developers access to powerful coding agents at **zero cost** through OpenRouter Free or Local LLMs (Ollama), while making it easy to switch to Premium models (GPT-4o, Claude) when needed.
 
 ---
 
 ## ⚙️ Key Features
 
-| Tính năng | Mô tả |
-|-----------|-------|
+| Feature | Description |
+|---------|-------------|
 | **Multi-Provider** | OpenRouter, OpenAI, Anthropic, Ollama, LM Studio, vLLM |
 | **Profile System** | Switch configs with one command: `free`, `premium`, `local`, `ollama`, `openrouter` |
 | **Auto Fallback** | Chain multiple free models — if one hits rate limit, the next takes over |
@@ -106,21 +105,19 @@ For the `local` profile (Ollama), no API key is needed.
 
 ## 📖 Documentation
 
-Detailed guides are in the [docs/](docs/) folder:
-
-| Guide | English | Vietnamese |
-|-------|---------|------------|
-| Installation | [docs/en/Installation.md](docs/en/Installation.md) | [Installation.md](docs/Installation.md) |
-| Profiles & Models | [docs/en/Profiles.md](docs/en/Profiles.md) | [Profiles.md](docs/Profiles.md) |
-| MCP Configuration | [docs/en/MCP.md](docs/en/MCP.md) | [MCP.md](docs/MCP.md) |
-| AI Agents | [docs/en/Agents.md](docs/en/Agents.md) | [Agents.md](docs/Agents.md) |
-| Prompt Library | [docs/en/Prompt-Library.md](docs/en/Prompt-Library.md) | [Prompt-Library.md](docs/Prompt-Library.md) |
-| FAQ | [docs/en/FAQ.md](docs/en/FAQ.md) | [FAQ.md](docs/FAQ.md) |
-| Benchmark | [docs/en/Benchmark.md](docs/en/Benchmark.md) | [Benchmark.md](docs/Benchmark.md) |
-| Init Command | [docs/en/Init.md](docs/en/Init.md) | [Init.md](docs/Init.md) |
+| Guide | Link |
+|-------|------|
+| Installation | [Installation.md](Installation.md) |
+| Profiles & Models | [Profiles.md](Profiles.md) |
+| MCP Configuration | [MCP.md](MCP.md) |
+| AI Agents | [Agents.md](Agents.md) |
+| Prompt Library | [Prompt-Library.md](Prompt-Library.md) |
+| FAQ | [FAQ.md](FAQ.md) |
+| Benchmark | [Benchmark.md](Benchmark.md) |
+| Init Command | [Init.md](Init.md) |
 
 ---
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE).
+MIT License — see [LICENSE](../LICENSE).

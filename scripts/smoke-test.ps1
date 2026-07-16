@@ -140,9 +140,12 @@ $docs = @("Installation", "Profiles", "MCP", "Agents", "Prompt-Library", "Benchm
 foreach ($doc in $docs) {
     $path = Join-Path (Join-Path $root "docs") "$doc.md"
     Test-Check "  docs/$doc.md exists" { Test-Path $path }
+    $enPath = Join-Path (Join-Path $root "docs") "en\$doc.md"
+    Test-Check "  docs/en/$doc.md exists" { Test-Path $enPath }
 }
 
 Test-Check "  README.md exists" { Test-Path (Join-Path $root "README.md") }
+Test-Check "  docs/en/README.md exists" { Test-Path (Join-Path (Join-Path $root "docs") "en\README.md") }
 Test-Check "  CHANGELOG.md exists" { Test-Path (Join-Path $root "CHANGELOG.md") }
 Test-Check "  LICENSE exists" { Test-Path (Join-Path $root "LICENSE") }
 Test-Check "  ROADMAP.md exists" { Test-Path (Join-Path $root "ROADMAP.md") }
