@@ -1,0 +1,9 @@
+{
+  "name": "git",
+  "description": "Allows AI to perform git actions (diff, log, status, commit, branch, blame)",
+  "toml_template": [
+    "[mcp_servers.git]",
+    "command = \"npx\"",
+    "args = [\"-y\", \"@modelcontextprotocol/server-git\"]"
+  ]
+}

@@ -1,0 +1,72 @@
+# Codex Profile: local
+# Runs entirely offline with Local Ollama models
+
+model_provider = "ollama"
+model = "qwen2.5-coder:7b"
+
+[model_providers.ollama]
+name = "Ollama Local"
+base_url = "http://localhost:11434/v1"
+env_key = "OLLAMA_API_KEY" # Placeholder API Key
+
+[tools]
+web_search = false # Local profiles disable web search by default to avoid internet dependencies
+file_browser = true
+
+[windows]
+sandbox = "unelevated"
+
+[plugins."test-android-apps@openai-curated"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+# ── MCP Servers ──────────────────────────────────────────────────
+# These are activated by install.ps1 / install.sh at setup time.
+# The __WORKSPACE_ROOT__ placeholder is replaced with your project path.
+
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
+
+[mcp_servers.git]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-git"]
+
+[mcp_servers.github]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+# Set your GitHub token via env var, then uncomment:
+# [mcp_servers.github.env]
+# GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+
+[mcp_servers.docker]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-docker"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-playwright"]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@context7/mcp-server"]

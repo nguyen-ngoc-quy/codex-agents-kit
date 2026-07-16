@@ -1,0 +1,11 @@
+# Ollama Configuration for Codex CLI
+model_provider = "ollama"
+model = "qwen2.5-coder:7b"       # Suggested coding model. Replace with your pulled model.
+
+[model_providers.ollama]
+name = "Ollama Local"
+base_url = "http://localhost:11434/v1"
+# Ollama does not require authentication, but Codex requires this field to be present.
+# Set to any non-empty placeholder value — it will not be used for API calls.
+env_key = "OLLAMA_API_KEY"       # ← set to any non-empty value, e.g. "placeholder"
+query_params = { }

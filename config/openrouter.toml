@@ -1,0 +1,20 @@
+# OpenRouter Configuration for Codex CLI
+model_provider = "openrouter"
+model = "google/gemini-2.5-flash:free" # Default fallback-friendly model
+
+[model_providers.openrouter]
+name = "OpenRouter AI"
+base_url = "https://openrouter.ai/api/v1"
+# API Key is read from environment variable OPENROUTER_API_KEY or you can paste it below
+env_key = "OPENROUTER_API_KEY"
+
+[model_providers.openrouter.query_params]
+# Configure OpenRouter-specific parameters like fallbacks
+# OpenRouter accepts a list of models to fallback to in case the primary one is busy
+models = [
+  "google/gemini-2.5-flash:free",
+  "qwen/qwen-2.5-coder-32b-instruct:free",
+  "deepseek/deepseek-r1:free",
+  "meta-llama/llama-3.3-70b-instruct:free"
+]
+route = "fallback"

@@ -1,0 +1,9 @@
+{
+  "name": "docker",
+  "description": "Allows AI to control Docker containers, view logs, inspect images, and manage networks",
+  "toml_template": [
+    "[mcp_servers.docker]",
+    "command = \"npx\"",
+    "args = [\"-y\", \"@modelcontextprotocol/server-docker\"]"
+  ]
+}

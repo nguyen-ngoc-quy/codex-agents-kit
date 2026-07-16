@@ -1,0 +1,81 @@
+# Codex Profile: free
+# Uses OpenRouter Free API with auto-fallback
+
+model_provider = "openrouter"
+model = "qwen/qwen-2.5-coder-32b-instruct:free"
+
+[model_providers.openrouter]
+name = "OpenRouter AI (Free)"
+base_url = "https://openrouter.ai/api/v1"
+env_key = "OPENROUTER_API_KEY"
+
+[model_providers.openrouter.query_params]
+models = [
+  "qwen/qwen-2.5-coder-32b-instruct:free",
+  "google/gemini-2.5-flash:free",
+  "deepseek/deepseek-r1:free",
+  "meta-llama/llama-3.3-70b-instruct:free"
+]
+route = "fallback"
+
+[tools]
+web_search = true
+file_browser = true
+
+[windows]
+sandbox = "unelevated"
+
+[plugins."test-android-apps@openai-curated"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+# ── MCP Servers ──────────────────────────────────────────────────
+# These are activated by install.ps1 / install.sh at setup time.
+# The __WORKSPACE_ROOT__ placeholder is replaced with your project path.
+
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
+
+[mcp_servers.git]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-git"]
+
+[mcp_servers.github]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+# Set your GitHub token via env var, then uncomment:
+# [mcp_servers.github.env]
+# GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+
+[mcp_servers.docker]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-docker"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-playwright"]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@context7/mcp-server"]

@@ -1,0 +1,9 @@
+{
+  "name": "playwright",
+  "description": "Allows AI to open web browsers, navigate pages, click buttons, input text, and capture screenshots",
+  "toml_template": [
+    "[mcp_servers.playwright]",
+    "command = \"npx\"",
+    "args = [\"-y\", \"@modelcontextprotocol/server-playwright\"]"
+  ]
+}

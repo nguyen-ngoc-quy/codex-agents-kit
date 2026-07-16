@@ -1,0 +1,56 @@
+# Custom Profile Template for Codex CLI
+# Copy this file, rename it, and adjust values below.
+# ⚠️  Never paste API keys here — always use environment variables.
+
+# ── Provider ─────────────────────────────────────────────────────
+# Supported providers: openrouter, openai, anthropic, ollama
+model_provider = "openrouter"
+model = "your-model-name"
+
+[model_providers.openrouter]
+name = "My Custom Profile"
+base_url = "https://openrouter.ai/api/v1"
+# Tên của environment variable chứa API key (không phải key value)
+env_key = "OPENROUTER_API_KEY"
+
+[model_providers.openrouter.query_params]
+models = [
+  "model-1",
+  "model-2"
+]
+route = "fallback"
+
+# ── Tools ────────────────────────────────────────────────────────
+[tools]
+web_search = true
+file_browser = true
+
+[windows]
+sandbox = "unelevated"
+
+# ── Plugins ──────────────────────────────────────────────────────
+[plugins."test-android-apps@openai-curated"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+# ── MCP Servers ──────────────────────────────────────────────────
+# The __WORKSPACE_ROOT__ placeholder is replaced with your project path
+# by switch-profile scripts automatically.
+
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
+
+[mcp_servers.git]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-git"]
+
+[mcp_servers.docker]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-docker"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-playwright"]

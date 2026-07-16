@@ -1,0 +1,9 @@
+{
+  "name": "filesystem",
+  "description": "Allows AI to view, read, search and write files in the local filesystem",
+  "toml_template": [
+    "[mcp_servers.filesystem]",
+    "command = \"npx\"",
+    "args = [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"C:\\\\Users\\\\QUY\\\\Documents\\\\GitHub\"]"
+  ]
+}

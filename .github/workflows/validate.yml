@@ -1,0 +1,226 @@
+# CI workflow for Codex CLI Ultimate
+# Runs on every push and pull request to validate:
+#   - TOML syntax in config files
+#   - Shell scripts with ShellCheck
+#   - PowerShell scripts with PSScriptAnalyzer
+#   - No leftover placeholders in deployed configs
+#   - All docs links are valid (basic check)
+
+name: validate
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+  pull_request:
+    branches: [main, master]
+
+env:
+  PYTHON_VERSION: "3.12"
+
+permissions:
+  contents: read
+
+jobs:
+  # ── Config validation ────────────────────────────────────────
+  config:
+    name: Config TOML Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TOML validator
+        run: pip install --quiet tomlkit
+
+      - name: Validate all .toml files
+        run: |
+          echo "--- Checking TOML files ---"
+          failed=0
+          while IFS= read -r -d '' file; do
+            echo -n "  $file ... "
+            if python -c "
+import tomlkit, sys
+try:
+    with open('$file') as f:
+        tomlkit.loads(f.read())
+    print('OK')
+except Exception as e:
+    print(f'FAIL: {e}')
+    sys.exit(1)
+"; then
+              : # ok
+            else
+              failed=$((failed + 1))
+            fi
+          done < <(find . -name '*.toml' -not -path './.git/*' -print0)
+          if [ "$failed" -gt 0 ]; then
+            echo "❌ $failed TOML file(s) failed validation"
+            exit 1
+          fi
+          echo "✅ All TOML files valid"
+
+      - name: Check for leaked placeholders
+        run: |
+          echo "--- Checking for __WORKSPACE_ROOT__ in configs ---"
+          found_leaks=$(grep -rn '__WORKSPACE_ROOT__' config/ 2>/dev/null || true)
+          if [ -n "$found_leaks" ]; then
+            echo "❌ __WORKSPACE_ROOT__ placeholder still present in config/:"
+            echo "$found_leaks"
+            exit 1
+          fi
+          echo "✅ No leftover placeholders"
+
+  # ── Shell script lint ────────────────────────────────────────
+  shell-lint:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        run: |
+          echo "--- Linting shell scripts ---"
+          failed=0
+          while IFS= read -r -d '' file; do
+            echo -n "  $file ... "
+            if shellcheck -x -S style "$file" 2>&1; then
+              echo "OK"
+            else
+              failed=$((failed + 1))
+            fi
+          done < <(find . -name '*.sh' -not -path './.git/*' -print0)
+          if [ "$failed" -gt 0 ]; then
+            echo "❌ $failed shell script(s) failed ShellCheck"
+            exit 1
+          fi
+          echo "✅ All shell scripts pass ShellCheck"
+
+  # ── PowerShell script lint ───────────────────────────────────
+  ps-lint:
+    name: PowerShell Script Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PowerShell
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq powershell >/dev/null 2>&1
+        if: runner.os == 'Linux'
+
+      - name: Install PSScriptAnalyzer
+        run: pwsh -Command "Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser -SkipPublisherCheck"
+
+      - name: Lint PowerShell scripts
+        run: |
+          pwsh -Command '
+            $failed = 0
+            Get-ChildItem -Recurse -Filter "*.ps1" | ForEach-Object {
+              Write-Host "  $($_.FullName) ... " -NoNewline
+              $results = Invoke-ScriptAnalyzer -Path $_.FullName -Severity Error,Warning
+              if ($results) {
+                Write-Host "FAIL" -ForegroundColor Red
+                $results | Format-Table | Out-String | Write-Host
+                $failed++
+              } else {
+                Write-Host "OK" -ForegroundColor Green
+              }
+            }
+            if ($failed -gt 0) { exit 1 }
+            Write-Host "All PowerShell scripts pass analysis" -ForegroundColor Green
+          '
+
+  # ── Cross-platform install test ───────────────────────────────
+  install-test:
+    name: Install Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create mock Codex home
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.codex"
+
+      - name: Run install script (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          chmod +x ./scripts/install.sh
+          # Non-interactive: skip PATH prompt
+          echo "N" | ./scripts/install.sh
+          # Verify config was created
+          test -f "$HOME/.codex/config.toml" || { echo "❌ config.toml not created"; exit 1; }
+          echo "✅ Install completed successfully"
+
+      - name: Run install script (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:CI = "true"
+          .\scripts\install.ps1
+          if (-not (Test-Path "$env:USERPROFILE\.codex\config.toml")) {
+            Write-Host "❌ config.toml not created" -ForegroundColor Red
+            exit 1
+          }
+          Write-Host "✅ Install completed successfully" -ForegroundColor Green
+
+      - name: Verify wrapper script exists
+        shell: bash
+        run: |
+          if [ -f "bin/codex.ps1" ]; then
+            echo "✅ bin/codex.ps1 wrapper exists"
+          else
+            echo "❌ bin/codex.ps1 wrapper missing"
+            exit 1
+          fi
+
+  # ── Markdown link check ──────────────────────────────────────
+  links:
+    name: Check Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check README contains expected sections
+        run: |
+          echo "--- Checking README.md ---"
+          for section in "Quick Start" "Folder Structure" "Key Features" "License"; do
+            if grep -q "$section" README.md; then
+              echo "  ✅ Section '$section' found"
+            else
+              echo "  ❌ Section '$section' missing"
+              exit 1
+            fi
+          done
+          echo "✅ README.md looks good"
+
+      # Basic internal link check (docs/*.md must exist)
+      - name: Check doc links
+        run: |
+          echo "--- Checking doc references ---"
+          failed=0
+          while IFS='](' read -r _ link; do
+            link="${link%%)*}"
+            case "$link" in
+              docs/*.md)
+                if [ ! -f "$link" ]; then
+                  echo "  ❌ Missing doc: $link"
+                  failed=$((failed + 1))
+                else
+                  echo "  ✅ $link"
+                fi
+                ;;
+              *) ;;
+            esac
+          done < <(grep -oP '\[.*?\]\(docs/[^)]+\.md\)' README.md 2>/dev/null || true)
+          if [ "$failed" -gt 0 ]; then
+            echo "❌ $failed doc link(s) broken"
+            exit 1
+          fi
+          echo "✅ All doc links valid"

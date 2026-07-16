@@ -1,0 +1,9 @@
+{
+  "name": "context7",
+  "description": "Allows AI to fetch the latest framework documentation (ASP.NET, Flutter, Unity, Docker, EF Core)",
+  "toml_template": [
+    "[mcp_servers.context7]",
+    "command = \"npx\"",
+    "args = [\"-y\", \"@context7/mcp-server\"]"
+  ]
+}
