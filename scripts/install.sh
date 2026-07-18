@@ -50,6 +50,9 @@ echo "Using Codex CLI executable: $CODEX_EXE"
 BIN_DIR="$WORKSPACE_ROOT/bin"
 mkdir -p "$BIN_DIR"
 
+# Escape CODEX_EXE safely for heredoc embedding (handles spaces, $, \`)
+ESCAPED_CODEX_EXE=$(printf '%q' "$CODEX_EXE")
+
 WRAPPER_PATH="$BIN_DIR/codex"
 cat << EOF > "$WRAPPER_PATH"
 #!/bin/bash
@@ -58,8 +61,8 @@ cat << EOF > "$WRAPPER_PATH"
 
 WORKSPACE_ROOT="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")/.." && pwd)"
 
-# Real codex binary — detected at install time
-CODEX_EXE="$CODEX_EXE"
+# Real codex binary — detected at install time (safely escaped)
+CODEX_EXE=${ESCAPED_CODEX_EXE}
 
 # Fallback: try PATH but exclude self to prevent infinite loop
 resolve_codex() {
@@ -102,9 +105,9 @@ case "\${1:-}" in
     doctor)   dispatch doctor ;;
     update)   dispatch update ;;
     benchmark) dispatch benchmark ;;
-    init)      dispatch init-project "$2" "$3";;
-    agent)     dispatch load-agent "$2" ;;
-	    fetch-docs) dispatch fetch-docs "$2" ;;
+    init)      dispatch init-project "\$2" "\$3";;
+    agent)     dispatch load-agent "\$2" ;;
+    fetch-docs) dispatch fetch-docs "\$2" ;;
     *)
         if [ -z "\$CODEX_EXE" ] || [ ! -x "\$CODEX_EXE" ]; then
             echo "❌ codex not found. Install Codex CLI or set CODEX_EXE." >&2

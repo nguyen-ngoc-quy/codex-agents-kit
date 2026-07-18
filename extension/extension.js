@@ -3,7 +3,7 @@
 
 const vscode = require('vscode');
 const path = require('path');
-const { execSync } = require('child_process');
+const fs = require('fs');
 
 /**
  * Find the workspace root where Codex CLI Ultimate is installed.
@@ -15,32 +15,48 @@ function findCodexRoot() {
 
     const root = workspaceFolders[0].uri.fsPath;
     // Check if we're in the codex-agents-kit repo
-    if (require('fs').existsSync(path.join(root, 'bin', 'codex.ps1'))) {
+    if (fs.existsSync(path.join(root, 'bin', 'codex.ps1'))) {
         return root;
     }
     // Search parent directories for the bin/codex.ps1 marker
     let dir = root;
     while (dir !== path.parse(dir).root) {
-        if (require('fs').existsSync(path.join(dir, 'bin', 'codex.ps1'))) {
+        if (fs.existsSync(path.join(dir, 'bin', 'codex.ps1'))) {
             return dir;
         }
         dir = path.dirname(dir);
     }
     // Fallback to user home .codex directory
     const homeDir = process.env.USERPROFILE || process.env.HOME;
-    if (homeDir && require('fs').existsSync(path.join(homeDir, '.codex', 'config.toml'))) {
-        return homeDir;
+    if (homeDir && fs.existsSync(path.join(homeDir, '.codex', 'config.toml'))) {
+        return path.join(homeDir, '.codex');
     }
     return null;
 }
 
 /**
  * Run a Codex script in the terminal.
+ * Escapes all arguments to prevent shell injection.
  */
 function runInTerminal(command, name) {
     const terminal = vscode.window.createTerminal({ name: `Codex: ${name}` });
     terminal.show();
     terminal.sendText(command);
+}
+
+/**
+ * Escape shell arguments to prevent injection.
+ * Windows PowerShell uses backtick escaping; POSIX uses single quotes.
+ */
+function shellEscape(arg, isWindows) {
+    if (isWindows) {
+        // PowerShell backtick escaping for embedded quotes
+        return '"' + String(arg).replace(/[`"$]/g, '`$&') + '"';
+    }
+    // POSIX: single quotes — break out, insert escaped quote, resume
+    const s = String(arg);
+    if (s.indexOf("'") === -1) return "'" + s + "'";
+    return "'" + s.replace(/'/g, "'\\''") + "'";
 }
 
 /**
@@ -80,7 +96,7 @@ function activate(context) {
         });
         if (selected) {
             const script = path.join(codexRoot, 'scripts', `switch-profile${scriptExt}`);
-            runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}" ${selected}`, `profile: ${selected}`);
+            runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}" ${shellEscape(selected, isWindows)}`, `profile: ${selected}`);
         }
     });
 
@@ -97,7 +113,9 @@ function activate(context) {
                 placeHolder: 'Select a template (optional)'
             });
             const script = path.join(codexRoot, 'scripts', `init-project${scriptExt}`);
-            const args = template ? `${name} ${template}` : name;
+            const args = template
+                ? `${shellEscape(name, isWindows)} ${shellEscape(template, isWindows)}`
+                : shellEscape(name, isWindows);
             runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}" ${args}`, `init: ${name}`);
         }
     });
@@ -109,7 +127,7 @@ function activate(context) {
         });
         if (selected) {
             const script = path.join(codexRoot, 'scripts', `load-agent${scriptExt}`);
-            runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}" ${selected}`, `agent: ${selected}`);
+            runInTerminal(`cd "${codexRoot}" && ${shellCmd} "${script}" ${shellEscape(selected, isWindows)}`, `agent: ${selected}`);
         }
     });
 
