@@ -1,4 +1,4 @@
-> Version: 0.1.5 | Last updated: 2026-07-16
+> Version: 0.1.6 | Last updated: 2026-07-17
 # Flutter Prompts
 
 Thư viện prompt tối ưu cho phát triển ứng dụng di động bằng **Flutter**, tuân thủ mô hình Feature First và Clean Code.

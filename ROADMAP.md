@@ -16,13 +16,13 @@ Bản lộ trình phát triển và hoàn thiện Codex CLI Ultimate Starter Kit
 ### v0.2 — MCP Ecosystem ⚡
 - [x] Xây dựng file cấu hình MCP mẫu cho Filesystem, Git, GitHub, Docker, Playwright, Context7.
 - [x] **Tự động đăng ký MCP servers** vào config.toml khi chạy `install.ps1` / `install.sh`.
-- [ ] Tích hợp Context7 lấy tài liệu tự động (ASP.NET, Flutter, Unity...).
-- [ ] Hướng dẫn cài đặt và thiết lập MCP chi tiết (sẵn có `docs/MCP.md` — cần bổ sung video/screenshot).
+- [x] Tích hợp Context7 lấy tài liệu tự động (ASP.NET, Flutter, Unity...).
+- [x] Hướng dẫn cài đặt và thiết lập MCP chi tiết (sẵn có `docs/MCP.md` — cần bổ sung video/screenshot).
 
 ### v0.3 — AI Agents Config ⚡
 - [x] Tạo System Instructions cho các Agent chuyên biệt (Architect, Backend, Frontend, DevOps, Reviewer, Debugger, Tester).
-- [ ] **Tích hợp agent instructions vào profile** — tự động inject system prompt khi switch profile.
-- [ ] Thêm cơ chế loading agent config từ CLI (ví dụ: `codex agent architect`).
+- [x] **Tích hợp agent instructions vào profile** — tự động inject system prompt khi switch profile.
+- [x] Thêm cơ chế loading agent config từ CLI (ví dụ: `codex agent architect`).
 
 ### v0.4 — Prompt Library ⚡
 - [x] Phát triển các prompt mẫu cho ASP.NET, Flutter, Unity, SQL, Docker & DevOps, Clean Code, Testing.
@@ -38,14 +38,14 @@ Bản lộ trình phát triển và hoàn thiện Codex CLI Ultimate Starter Kit
 - [x] Tạo VSCode Extension cung cấp menu chuột phải (scaffold).
 - [x] Tích hợp Command Palette chạy các script Codex nhanh chóng (scaffold).
 
-### v1.0 — Official Release
+### v0.1.6 — Current Release
 - [x] Hoàn thiện hệ thống tài liệu song ngữ (EN + VI).
 - [x] Smoke test trên Windows, Linux, macOS (CI).
 - [x] Đóng gói và phát hành chính thức bản v0.1.6.
 
+### v1.0 — Official Release
+- [ ] Hoàn thiện toàn bộ plugin và tính năng cho phiên bản 1.0.
+
 ---
 
-## 🎯 Mục tiêu dài hạn (Long-term Goals)
-- Giúp Codex CLI trở nên phổ biến và dễ dùng nhất cho các developer Việt Nam.
-- Thay thế 90% nhu cầu Claude Code bằng giải pháp miễn phí hoặc local.
-- Hỗ trợ đầy đủ các tác vụ DevOps & Cài đặt hệ thống tự động qua AI Agent.
+

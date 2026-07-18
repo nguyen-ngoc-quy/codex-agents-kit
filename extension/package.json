@@ -2,7 +2,7 @@
   "name": "codex-agents-kit",
   "displayName": "Codex Agents Kit",
   "description": "Run Codex CLI Ultimate commands from VS Code — switch profiles, init projects, run diagnostics, and more.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "publisher": "nguyen-ngoc-quy",
   "license": "MIT",
   "repository": {
@@ -15,7 +15,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:bin/codex.ps1"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [

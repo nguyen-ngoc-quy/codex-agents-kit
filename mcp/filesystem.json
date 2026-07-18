@@ -4,6 +4,6 @@
   "toml_template": [
     "[mcp_servers.filesystem]",
     "command = \"npx\"",
-    "args = [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"C:\\\\Users\\\\QUY\\\\Documents\\\\GitHub\"]"
+    "args = [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"__WORKSPACE_ROOT__\"]"
   ]
 }

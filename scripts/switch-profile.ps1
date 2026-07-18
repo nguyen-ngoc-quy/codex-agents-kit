@@ -38,9 +38,9 @@ if (Test-Path $configFile) {
 # Copy new config
 Copy-Item -Path $profileFile -Destination $configFile -Force
 
-# Replace placeholders with actual workspace path
+# Replace placeholders with actual workspace path (escape backslashes for TOML)
 $configContent = Get-Content $configFile -Raw
-$configContent = $configContent.Replace('__WORKSPACE_ROOT__', $workspaceRoot)
+$configContent = $configContent.Replace('__WORKSPACE_ROOT__', $workspaceRoot.ToString().Replace('\', '\\'))
 Set-Content -Path $configFile -Value $configContent -Force
 
 Write-Host "Successfully switched to '$ProfileName'!" -ForegroundColor Green

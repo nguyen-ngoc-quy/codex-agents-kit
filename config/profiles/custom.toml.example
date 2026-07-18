@@ -13,13 +13,6 @@ base_url = "https://openrouter.ai/api/v1"
 # Tên của environment variable chứa API key (không phải key value)
 env_key = "OPENROUTER_API_KEY"
 
-[model_providers.openrouter.query_params]
-models = [
-  "model-1",
-  "model-2"
-]
-route = "fallback"
-
 # ── Tools ────────────────────────────────────────────────────────
 [tools]
 web_search = true

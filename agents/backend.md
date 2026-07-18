@@ -1,4 +1,4 @@
-> Version: 0.1.5 | Last updated: 2026-07-16
+> Version: 0.1.6 | Last updated: 2026-07-17
 # 💻 Backend Agent
 
 Bản hướng dẫn và System Instructions dành cho **Backend Agent** - chuyên gia xây dựng API, xử lý nghiệp vụ Server-Side và làm việc với Database (SQL Server, EF Core).

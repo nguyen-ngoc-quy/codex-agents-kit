@@ -1,4 +1,4 @@
-> Version: 0.1.5 | Last updated: 2026-07-16
+> Version: 0.1.6 | Last updated: 2026-07-17
 # 🏗️ Architect Agent
 
 Bản hướng dẫn nhiệm vụ và System Instructions dành cho **Architect Agent** - chịu trách nhiệm thiết kế hệ thống, phân tích kiến trúc cơ sở dữ liệu và sơ đồ cấu trúc.

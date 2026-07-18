@@ -1,4 +1,4 @@
-> Version: 0.1.5 | Last updated: 2026-07-16
+> Version: 0.1.6 | Last updated: 2026-07-17
 # SQL Server & Database Prompts
 
 Thư viện prompt tối ưu cho thiết kế database, tối ưu hóa truy vấn SQL và tạo các bản Migration.

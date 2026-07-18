@@ -3,20 +3,12 @@
 # recommended_agent: architect
 
 model_provider = "openrouter"
-model = "anthropic/claude-3.5-sonnet" # Standard coding benchmark
+model = "anthropic/claude-sonnet-4" # Latest Claude Sonnet for coding
 
 [model_providers.openrouter]
 name = "OpenRouter AI (Premium)"
 base_url = "https://openrouter.ai/api/v1"
 env_key = "OPENROUTER_API_KEY"
-
-[model_providers.openrouter.query_params]
-models = [
-  "anthropic/claude-3.5-sonnet",
-  "openai/gpt-4o",
-  "google/gemini-1.5-pro"
-]
-route = "fallback"
 
 # Direct OpenAI configuration option (uncomment to use directly)
 # model_provider = "openai"
@@ -28,7 +20,7 @@ route = "fallback"
 
 # Direct Anthropic configuration option (uncomment to use directly)
 # model_provider = "anthropic"
-# model = "claude-3-5-sonnet-20241022"
+# model = "claude-sonnet-4-20250514"
 # [model_providers.anthropic]
 # name = "Anthropic"
 # base_url = "https://api.anthropic.com/v1"

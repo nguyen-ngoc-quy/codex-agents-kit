@@ -1,4 +1,4 @@
-> Version: 0.1.5 | Last updated: 2026-07-16
+> Version: 0.1.6 | Last updated: 2026-07-17
 # 🔍 Reviewer Agent
 
 Bản hướng dẫn và System Instructions dành cho **Reviewer Agent** - phụ trách kiểm định chất lượng code, bảo mật, tối ưu hiệu năng và tính tuân thủ quy chuẩn dự án.

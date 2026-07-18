@@ -1,4 +1,4 @@
-# Diagnostics Script for Codex CLI
+﻿# Diagnostics Script for Codex CLI
 # Checks environment, API keys, endpoints, CLI pathing, and MCP dependencies
 
 # Error policy: Continue — each check reports independently; one failure shouldn't skip others
@@ -75,7 +75,10 @@ if (-not $codexPath -or -not (Test-Path $codexPath)) {
     $codexPath = [Environment]::GetEnvironmentVariable("CODEX_CLI_PATH", "Machine")
 }
 if (-not $codexPath -or -not (Test-Path $codexPath)) {
-    try { $codexPath = (Get-Command codex.exe -ErrorAction Stop).Source } catch {}
+    # Try codex.exe first, then codex.cmd (npm global install)
+    foreach ($name in @("codex.exe", "codex.cmd")) {
+        try { $codexPath = (Get-Command $name -ErrorAction Stop).Source; break } catch {}
+    }
 }
 
 if ($codexPath -and (Test-Path $codexPath)) {

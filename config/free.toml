@@ -10,15 +10,6 @@ name = "OpenRouter AI (Free)"
 base_url = "https://openrouter.ai/api/v1"
 env_key = "OPENROUTER_API_KEY"
 
-[model_providers.openrouter.query_params]
-models = [
-  "qwen/qwen-2.5-coder-32b-instruct:free",
-  "google/gemini-2.5-flash:free",
-  "deepseek/deepseek-r1:free",
-  "meta-llama/llama-3.3-70b-instruct:free"
-]
-route = "fallback"
-
 [tools]
 web_search = true
 file_browser = true
