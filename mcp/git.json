@@ -4,6 +4,6 @@
   "toml_template": [
     "[mcp_servers.git]",
     "command = \"npx\"",
-    "args = [\"-y\", \"@modelcontextprotocol/server-git\"]"
+    "args = [\"-y\", \"@cyanheads/git-mcp-server\"]"
   ]
 }

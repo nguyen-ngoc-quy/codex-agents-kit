@@ -4,6 +4,6 @@
   "toml_template": [
     "[mcp_servers.docker]",
     "command = \"npx\"",
-    "args = [\"-y\", \"@modelcontextprotocol/server-docker\"]"
+    "args = [\"-y\", \"@hypnosis/docker-mcp-server\"]"
   ]
 }

@@ -4,6 +4,6 @@
   "toml_template": [
     "[mcp_servers.playwright]",
     "command = \"npx\"",
-    "args = [\"-y\", \"@modelcontextprotocol/server-playwright\"]"
+    "args = [\"-y\", \"@playwright/mcp\"]"
   ]
 }

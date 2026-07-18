@@ -30,6 +30,22 @@ Chạy hoàn toàn ngoại tuyến (Offline) bằng việc kết nối tới Oll
 
 ---
 
+### 4. Ollama Profile (`config/ollama.toml`)
+Cấu hình chuyên biệt dành riêng cho Ollama với tuỳ chỉnh base URL.
+- Kết nối tới `http://localhost:11434/v1`
+- Không cần API key (set `env_key` thành bất kỳ giá trị nào)
+- Sử dụng bất kỳ model nào bạn đã pull về máy
+
+---
+
+### 5. OpenRouter Profile (`config/openrouter.toml`)
+Cấu hình OpenRouter độc lập với chuỗi fallback model.
+- Danh sách model fallback có thể tuỳ chỉnh
+- Sử dụng `route = "fallback"` để tự động retry khi gặp rate limit
+- Đọc API key từ biến môi trường `OPENROUTER_API_KEY`
+
+---
+
 ## 🔄 Chuỗi chuyển hướng tự động (Auto Fallback Chain)
 
 Khi sử dụng OpenRouter Free, các giới hạn lượt gọi (Rate limits) rất dễ bị chạm. Cấu hình `free.toml` đã được tích hợp tính năng **Auto Fallback** trong query parameters:

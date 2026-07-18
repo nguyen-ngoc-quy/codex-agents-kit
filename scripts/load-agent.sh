@@ -19,7 +19,25 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Validate agent name: only alphanumeric, dots, hyphens, underscores
+if ! echo "$AGENT_NAME" | grep -qE '^[a-zA-Z0-9._-]+$'; then
+    echo "❌ Error: Invalid agent name '$AGENT_NAME'." >&2
+    echo "   Use only letters, digits, dots, hyphens, and underscores." >&2
+    exit 1
+fi
+
 AGENT_FILE="$WORKSPACE_ROOT/agents/$AGENT_NAME.md"
+
+# Path containment: ensure the resolved path stays within agents/
+RESOLVED_AGENT=$(realpath "$AGENT_FILE" 2>/dev/null || echo "$AGENT_FILE")
+case "$RESOLVED_AGENT" in
+    "$WORKSPACE_ROOT/agents/"*) ;;
+    *)
+        echo "❌ Error: Invalid agent path." >&2
+        exit 1
+        ;;
+esac
 
 if [ ! -f "$AGENT_FILE" ]; then
     echo "❌ Agent '$AGENT_NAME' not found at: $AGENT_FILE"

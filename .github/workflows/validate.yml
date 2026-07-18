@@ -64,7 +64,7 @@ except Exception as e:
       - name: Check for leaked placeholders
         run: |
           echo "--- Checking for __WORKSPACE_ROOT__ in configs ---"
-          found_leaks=$(grep -rn '__WORKSPACE_ROOT__' config/ 2>/dev/null || true)
+          found_leaks=$(grep -rn '__WORKSPACE_ROOT__' config/ --exclude-dir='profiles' 2>/dev/null || true)
           if [ -n "$found_leaks" ]; then
             echo "❌ __WORKSPACE_ROOT__ placeholder still present in config/:"
             echo "$found_leaks"

@@ -34,7 +34,9 @@ function Invoke-Script($Name) {
 
 # ── Detect codex CLI executable ──────────────────────────────────
 function Find-CodexExe {
-    # 1. Environment variable override
+    # 1. Environment variable override — Process scope first (highest priority)
+    $envPath = [Environment]::GetEnvironmentVariable("CODEX_CLI_PATH", "Process")
+    if ($envPath -and (Test-Path $envPath)) { return $envPath }
     $envPath = [Environment]::GetEnvironmentVariable("CODEX_CLI_PATH", "User")
     if ($envPath -and (Test-Path $envPath)) { return $envPath }
     $envPath = [Environment]::GetEnvironmentVariable("CODEX_CLI_PATH", "Machine")

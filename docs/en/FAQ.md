@@ -98,7 +98,7 @@ Check:
 ---
 
 ## 📁 11. Can I create my own profile?
-Yes. See the guide at [config/profiles/README.md](../config/profiles/README.md). Copy `custom.toml.example` and customize it.
+Yes. See the guide at [config/profiles/README.md](../../config/profiles/README.md). Copy `custom.toml.example` and customize it.
 
 ---
 

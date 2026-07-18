@@ -14,6 +14,13 @@ if [ -z "$PROJECT_NAME" ]; then
     exit 1
 fi
 
+# Validate project name: only alphanumeric, dots, hyphens, underscores
+if ! echo "$PROJECT_NAME" | grep -qE '^[a-zA-Z0-9._-]+$'; then
+    echo "❌ Error: Project name '$PROJECT_NAME' contains invalid characters." >&2
+    echo "   Use only letters, digits, dots, hyphens, and underscores." >&2
+    exit 1
+fi
+
 echo "========================================="
 echo "✨ Codex Init — Creating new project"
 echo "========================================="

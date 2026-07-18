@@ -203,18 +203,27 @@ Write-Host "  (Run 'npx -y @modelcontextprotocol/server-*' to install on first u
 # Check if MCP packages are already cached in npm
 $mcpPackages = @(
     "@modelcontextprotocol/server-filesystem",
-    "@modelcontextprotocol/server-git",
+    "@cyanheads/git-mcp-server",
     "@modelcontextprotocol/server-github",
-    "@modelcontextprotocol/server-docker",
-    "@modelcontextprotocol/server-playwright"
+    "@hypnosis/docker-mcp-server",
+    "@playwright/mcp"
 )
 
 foreach ($pkg in $mcpPackages) {
     Write-Check "  $pkg... "
-    $pkgName = $pkg.Split('/')[-1]
-    # Check npm cache for the package (fast, doesn't install)
-    $cacheResult = npx -y --no-install $pkg --help 2>&1
-    if ($LASTEXITCODE -eq 0) {
+    # Check if package exists via npm view (no install, no side effects)
+    $cached = $false
+    try {
+        $null = npm list -g $pkg 2>&1
+        if ($LASTEXITCODE -eq 0) { $cached = $true }
+    } catch {
+        # fallback: check npm cache
+        try {
+            $null = npm cache ls $pkg 2>&1
+            if ($LASTEXITCODE -eq 0) { $cached = $true }
+        } catch { }
+    }
+    if ($cached) {
         Write-Pass "cached"
     } else {
         Write-Warn "not cached (will download on first use)"
