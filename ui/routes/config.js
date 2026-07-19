@@ -21,12 +21,22 @@ function listProfiles(root) {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/**
+ * Parse TOML, tolerating CRLF line endings.
+ * @iarna/toml rejects lone \r as a control character inside comments,
+ * so normalize CRLF → LF before parsing. This does not touch the file
+ * on disk — only the in-memory string handed to the parser.
+ */
+function parseToml(raw) {
+  return toml.parse(raw.replace(/\r\n/g, '\n'));
+}
+
 function getActiveProfile(codexHome) {
   const configFile = path.join(codexHome, 'config.toml');
   if (!fs.existsSync(configFile)) return null;
   const raw = fs.readFileSync(configFile, 'utf8');
   try {
-    const data = toml.parse(raw);
+    const data = parseToml(raw);
     return {
       provider: data.model_provider || 'unknown',
       model: data.model || 'unknown',
@@ -71,7 +81,7 @@ module.exports = function (app, ctx) {
 
     try {
       const raw = fs.readFileSync(profile.path, 'utf8');
-      const data = toml.parse(raw);
+      const data = parseToml(raw);
 
       const providerName = data.model_provider || 'openai';
       const providerConfig = data.model_providers ? data.model_providers[providerName] : {};
@@ -127,7 +137,7 @@ module.exports = function (app, ctx) {
 
     // 1. Validate TOML syntax before writing
     try {
-      toml.parse(content);
+      parseToml(content);
     } catch (err) {
       return res.status(400).json({
         error: `Invalid TOML syntax: ${err.message}`,
@@ -155,7 +165,7 @@ module.exports = function (app, ctx) {
     // 4. Re-read and verify
     try {
       const written = fs.readFileSync(profile.path, 'utf8');
-      toml.parse(written);
+      parseToml(written);
     } catch (err) {
       try {
         fs.copyFileSync(backupPath, profile.path);
