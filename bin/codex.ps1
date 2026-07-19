@@ -78,6 +78,10 @@ if ($RemainingArgs.Count -gt 0) {
             Write-Host "  codex init <name> [tpl] Scaffold a new project" -ForegroundColor White
             Write-Host "  codex agent <name>      Load agent instructions (architect, backend, ...)" -ForegroundColor White
             Write-Host "  codex fetch-docs <fw>   Download framework docs for offline context" -ForegroundColor White
+            Write-Host "  codex ui [--port=N]     Start Admin Web UI" -ForegroundColor White
+            Write-Host "  codex openrouter [opts] List free models from OpenRouter" -ForegroundColor White
+            Write-Host "                         (use --json for JSON, --all for all models)" -ForegroundColor Gray
+            Write-Host "  codex config <cmd>      Manage configuration (list, get, set, edit)" -ForegroundColor White
             Write-Host "  codex update            Pull latest configs and prompts from Git" -ForegroundColor White
             Write-Host "  codex help              Show this help message" -ForegroundColor White
             Write-Host ""
@@ -87,7 +91,7 @@ if ($RemainingArgs.Count -gt 0) {
         "profile" {
             if ($RemainingArgs.Count -lt 2) {
                 Write-Host "Usage: codex profile <name>" -ForegroundColor Yellow
-                Write-Host "  Try: free, premium, local, ollama, openrouter" -ForegroundColor Gray
+                Write-Host "  Try: free, premium, local, ollama, openrouter, opencode-zen" -ForegroundColor Gray
                 Write-Host "Available profiles:" -ForegroundColor Gray
                 Get-ChildItem (Join-Path $WorkspaceRoot "config") -Filter "*.toml" | ForEach-Object {
                     Write-Host "  - $($_.BaseName)" -ForegroundColor Cyan
@@ -102,6 +106,13 @@ if ($RemainingArgs.Count -gt 0) {
         "init"      { Invoke-Script "init-project" }
         "agent"     { Invoke-Script "load-agent" }
         "fetch-docs" { Invoke-Script "fetch-docs" }
+        "ui" {
+            & (Join-Path $WorkspaceRoot "scripts" "start-ui.ps1") $RemainingArgs[1..($RemainingArgs.Count - 1)]
+        }
+        "openrouter" {
+            & (Join-Path $WorkspaceRoot "scripts" "list-openrouter-models.ps1") $RemainingArgs[1..($RemainingArgs.Count - 1)]
+        }
+        "config" { Invoke-Script "config" }
         default {
             if (-not $CodexExe) {
                 Write-Host "codex.exe not found. Please install Codex CLI or set CODEX_CLI_PATH." -ForegroundColor Red
