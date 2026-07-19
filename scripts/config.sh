@@ -52,8 +52,12 @@ set_config_field() {
 
     if echo "$content" | grep -q "^${key}[[:space:]]*="; then
         content=$(echo "$content" | sed "s|^\(${key}[[:space:]]*=[[:space:]]*\)\"[^\"]*\"|\1\"${escaped}\"|")
-    else
+    elif echo "$content" | grep -q "^model_provider[[:space:]]*="; then
         content=$(echo "$content" | sed "s|^\(model_provider[[:space:]]*=[[:space:]]*\"[^\"]*\"\)|\1\n${key} = \"${escaped}\"|")
+    else
+        echo "❌ Cannot set '$key': no 'model_provider' line found in config" >&2
+        echo "  The config file may be corrupted or improperly formatted." >&2
+        exit 1
     fi
 
     if ! toml_validate "$content"; then
@@ -178,16 +182,23 @@ case "$COMMAND" in
         # Set model_provider (use section_name for opencode-zen → openai)
         content=$(echo "$content" | sed "s|^model_provider[[:space:]]*=[[:space:]]*\"[^\"]*\"|model_provider = \"${section_name}\"|")
 
+        # Get current provider value to target its section specifically
+        local current_provider
+        current_provider=$(echo "$content" | grep -E '^model_provider[[:space:]]*=' | head -1 | sed 's/^[^"]*"\([^"]*\)".*/\1/')
+
         # Replace or add provider block
         if echo "$content" | grep -qE '^\[model_providers\.'; then
-            content=$(echo "$content" | sed "s|^\(\[model_providers\)\.\([^]]*\)\]|\1.${section_name}]|")
+            # Only rename the section matching the current provider, not all sections
+            local old_section
+            old_section=$(to_section_name "$current_provider")
+            content=$(echo "$content" | sed "s|^\[model_providers\.${old_section}\]|[model_providers.${section_name}]|")
             # Update name, base_url, env_key inside the block
             content=$(echo "$content" | sed "s|^name[[:space:]]*=[[:space:]]*\"[^\"]*\"|name = \"${name}\"|")
             content=$(echo "$content" | sed "s|^base_url[[:space:]]*=[[:space:]]*\"[^\"]*\"|base_url = \"${base_url}\"|")
             content=$(echo "$content" | sed "s|^env_key[[:space:]]*=[[:space:]]*\"[^\"]*\"|env_key = \"${env_key}\"|")
         else
             content="$content
-[${section_name}]
+[model_providers.${section_name}]
 name = \"${name}\"
 base_url = \"${base_url}\"
 env_key = \"${env_key}\""
