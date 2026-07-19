@@ -81,7 +81,7 @@ if ($RemainingArgs.Count -gt 0) {
             Write-Host "  codex ui [--port=N]     Start Admin Web UI" -ForegroundColor White
             Write-Host "  codex openrouter [opts] List free models from OpenRouter" -ForegroundColor White
             Write-Host "                         (use --json for JSON, --all for all models)" -ForegroundColor Gray
-            Write-Host "  codex config <cmd>      Manage configuration (list, get, set, edit)" -ForegroundColor White
+            Write-Host "  codex config <cmd>      Manage configuration (list, get, set, set-model, set-provider, edit)" -ForegroundColor White
             Write-Host "  codex update            Pull latest configs and prompts from Git" -ForegroundColor White
             Write-Host "  codex help              Show this help message" -ForegroundColor White
             Write-Host ""

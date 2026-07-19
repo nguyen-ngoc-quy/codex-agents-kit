@@ -77,11 +77,11 @@ function Set-ConfigField {
 function Get-ProviderDefaults {
     param([string]$ProviderName)
     $defaults = @{
-        "openai" = @{ base_url = "https://api.openai.com/v1"; env_key = "OPENAI_API_KEY" }
-        "openrouter" = @{ base_url = "https://openrouter.ai/api/v1"; env_key = "OPENROUTER_API_KEY" }
-        "anthropic" = @{ base_url = "https://api.anthropic.com/v1"; env_key = "ANTHROPIC_API_KEY" }
-        "ollama" = @{ base_url = "http://localhost:11434/v1"; env_key = "OLLAMA_API_KEY" }
-        "opencode-zen" = @{ base_url = "https://opencode.ai/zen/v1"; env_key = "OPENCODE_API_KEY" }
+        "openai" = @{ base_url = "https://api.openai.com/v1"; env_key = "OPENAI_API_KEY"; name = "OpenAI" }
+        "openrouter" = @{ base_url = "https://openrouter.ai/api/v1"; env_key = "OPENROUTER_API_KEY"; name = "OpenRouter" }
+        "anthropic" = @{ base_url = "https://api.anthropic.com/v1"; env_key = "ANTHROPIC_API_KEY"; name = "Anthropic" }
+        "ollama" = @{ base_url = "http://localhost:11434/v1"; env_key = "OLLAMA_API_KEY"; name = "Ollama" }
+        "opencode-zen" = @{ base_url = "https://opencode.ai/zen/v1"; env_key = "OPENCODE_API_KEY"; name = "OpenCode Zen" }
     }
     return $defaults[$ProviderName]
 }
@@ -98,7 +98,7 @@ switch ($Command) {
                 Write-Host "  $f = $($Matches[1])" -ForegroundColor White
             }
         }
-        if ($content -match "(?m)^\[model_providers\.(\w+)\]") {
+        if ($content -match "(?m)^\[model_providers\.([a-zA-Z0-9._-]+)\]") {
             $providerName = $Matches[1]
             Write-Host "  [model_providers.$providerName]" -ForegroundColor Gray
             if ($content -match "(?m)^name\s*=\s*""([^""]+)""") {
@@ -123,7 +123,7 @@ switch ($Command) {
         }
         $pluginCount = [regex]::Matches($content, '(?m)^\[plugins\."').Count
         Write-Host "  Plugins: $pluginCount enabled" -ForegroundColor Gray
-        $mcpCount = [regex]::Matches($content, '(?m)^\[mcp_servers\.\w+\]').Count
+        $mcpCount = [regex]::Matches($content, '(?m)^\[mcp_servers\.[a-zA-Z0-9._-]+\]').Count
         Write-Host "  MCP Servers: $mcpCount configured" -ForegroundColor Gray
     }
 
@@ -157,17 +157,41 @@ switch ($Command) {
         $provider = $Args[0].ToLower()
         $defaults = Get-ProviderDefaults -ProviderName $provider
         if (-not $defaults) { Write-Host "❌ Unknown provider '$provider'" -ForegroundColor Red; exit 1 }
-        Backup-Config
+        # Check file exists first (Get-ActiveConfig has friendly error)
         $content = Get-ActiveConfig
-        $content = $content -replace '(?m)^model_provider\s*=\s*"[^"]*"', "model_provider = `"$provider`""
-        $providerHeader = "[model_providers.$provider]"
-        if ($content -match "(?m)^\[model_providers\.\w+\]") {
-            $content = $content -replace '(?m)^\[model_providers\.\w+\]', $providerHeader
+        Backup-Config
+        # For opencode-zen, model_provider value and section name must be "openai"
+        $sectionProvider = if ($provider -eq "opencode-zen") { "openai" } else { $provider }
+        $content = $content -replace '(?m)^model_provider\s*=\s*"[^"]*"', "model_provider = `"$sectionProvider`""
+        $providerHeader = "[model_providers.$sectionProvider]"
+        if ($content -match "(?m)^\[model_providers\.[a-zA-Z0-9._-]+\]") {
+            $content = $content -replace '(?m)^\[model_providers\.[a-zA-Z0-9._-]+\]', $providerHeader
+            # Also update name, base_url, env_key inside the existing block
+            $content = $content -replace '(?m)^name\s*=\s*"[^"]*"', "name = `"$($defaults.name)`""
+            $content = $content -replace '(?m)^base_url\s*=\s*"[^"]*"', "base_url = `"$($defaults.base_url)`""
+            $content = $content -replace '(?m)^env_key\s*=\s*"[^"]*"', "env_key = `"$($defaults.env_key)`""
         } else {
             $content += "`n$providerHeader`n"
-            $content += "name = `"$provider`"`n"
+            $content += "name = `"$($defaults.name)`"`n"
             $content += "base_url = `"$($defaults.base_url)`"`n"
             $content += "env_key = `"$($defaults.env_key)`"`n"
+        }
+        # Validate TOML before writing
+        try {
+            $openQuotes = [regex]::Matches($content, '"').Count
+            if ($openQuotes % 2 -ne 0) {
+                throw "Unbalanced quotes in TOML"
+            }
+            $openBrackets = [regex]::Matches($content, '\[').Count
+            $closeBrackets = [regex]::Matches($content, '\]').Count
+            if ($openBrackets -ne $closeBrackets) {
+                throw "Unbalanced brackets in TOML"
+            }
+        } catch {
+            Copy-Item -Path "$activeConfig.bak" -Destination $activeConfig -Force
+            Write-Host "❌ Failed to write config: $_" -ForegroundColor Red
+            Write-Host "  Changes reverted from backup." -ForegroundColor Yellow
+            exit 1
         }
         Set-Content -Path $activeConfig -Value $content -Force
         Write-Host "✅ Provider switched to '$provider'" -ForegroundColor Green
