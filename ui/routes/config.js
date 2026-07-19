@@ -1,5 +1,5 @@
 /**
- * Config routes — profile management (list, switch, view, create).
+ * Config routes — profile management (list, switch, view, create, edit).
  */
 const fs = require('fs');
 const path = require('path');
@@ -26,13 +26,43 @@ function getActiveProfile(codexHome) {
   if (!fs.existsSync(configFile)) return null;
   const raw = fs.readFileSync(configFile, 'utf8');
   try {
-    const toml = require('@iarna/toml').parse(raw);
+    const data = toml.parse(raw);
     return {
-      provider: toml.model_provider || 'unknown',
-      model: toml.model || 'unknown',
+      provider: data.model_provider || 'unknown',
+      model: data.model || 'unknown',
     };
   } catch { return null; }
 }
+
+module.exports = function (app, ctx) {
+  const { WORKSPACE_ROOT, CODEX_HOME } = ctx;
+  const profiles = () => listProfiles(WORKSPACE_ROOT);
+  const activeProfile = () => getActiveProfile(CODEX_HOME);
+
+  // GET /api/profiles — list all profiles
+  app.get('/api/profiles', (req, res) => {
+    const active = activeProfile();
+    res.json({
+      profiles: profiles().map(p => {
+        const raw = fs.readFileSync(p.path, 'utf8');
+        const provider = raw.match(/model_provider\s*=\s*"([^"]+)"/)?.[1] || 'unknown';
+        const model = raw.match(/^model\s*=\s*"([^"]+)"/m)?.[1] || 'unknown';
+        const agent = raw.match(/#\s*recommended_agent:\s*(\S+)/)?.[1] || null;
+        const isActive = active &&
+          active.provider === provider &&
+          active.model === model;
+        return { name: p.name, provider, model, recommendedAgent: agent, isActive };
+      }),
+    });
+  });
+
+  // GET /api/profiles/:name — get profile TOML content
+  app.get('/api/profiles/:name', (req, res) => {
+    const profile = profiles().find(p => p.name === req.params.name);
+    if (!profile) return res.status(404).json({ error: 'Profile not found' });
+    const raw = fs.readFileSync(profile.path, 'utf8');
+    res.json({ name: profile.name, content: raw });
+  });
 
   // GET /api/profiles/:name/fields — get profile as structured field groups
   app.get('/api/profiles/:name/fields', (req, res) => {
@@ -139,36 +169,6 @@ function getActiveProfile(codexHome) {
     try { fs.unlinkSync(backupPath); } catch (_) {}
 
     res.json({ success: true, name: profile.name });
-  });
-
-module.exports = function (app, ctx) {
-  const { WORKSPACE_ROOT, CODEX_HOME } = ctx;
-  const profiles = () => listProfiles(WORKSPACE_ROOT);
-  const activeProfile = () => getActiveProfile(CODEX_HOME);
-
-  // GET /api/profiles — list all profiles
-  app.get('/api/profiles', (req, res) => {
-    const active = activeProfile();
-    res.json({
-      profiles: profiles().map(p => {
-        const raw = fs.readFileSync(p.path, 'utf8');
-        const provider = raw.match(/model_provider\s*=\s*"([^"]+)"/)?.[1] || 'unknown';
-        const model = raw.match(/^model\s*=\s*"([^"]+)"/m)?.[1] || 'unknown';
-        const agent = raw.match(/#\s*recommended_agent:\s*(\S+)/)?.[1] || null;
-        const isActive = active &&
-          active.provider === provider &&
-          active.model === model;
-        return { name: p.name, provider, model, recommendedAgent: agent, isActive };
-      }),
-    });
-  });
-
-  // GET /api/profiles/:name — get profile TOML content
-  app.get('/api/profiles/:name', (req, res) => {
-    const profile = profiles().find(p => p.name === req.params.name);
-    if (!profile) return res.status(404).json({ error: 'Profile not found' });
-    const raw = fs.readFileSync(profile.path, 'utf8');
-    res.json({ name: profile.name, content: raw });
   });
 
   // POST /api/profiles/:name/switch — switch to a profile
