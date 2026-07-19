@@ -16,9 +16,9 @@ Sử dụng các mô hình miễn phí thông qua cổng OpenRouter. Phù hợp 
 
 ### 2. Premium Profile (`config/premium.toml`)
 Sử dụng các mô hình thương mại cao cấp nhất thế giới qua API key cá nhân của bạn.
-- **Claude 3.5 Sonnet**: Lựa chọn tối ưu nhất cho lập trình và phân tích cấu trúc phức tạp.
+- **Claude Sonnet 4 / Opus 4.8**: Lựa chọn tối ưu nhất cho lập trình và phân tích cấu trúc phức tạp.
 - **GPT-4o / GPT-4o mini**: Tốc độ phản hồi cực nhanh, độ ổn định cao.
-- **Gemini 1.5 Pro**: Tối ưu cho xử lý các file codebase siêu lớn (Long Context).
+- **Gemini 2.5 Pro**: Tối ưu cho xử lý các file codebase siêu lớn (Long Context).
 
 ---
 

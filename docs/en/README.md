@@ -32,7 +32,7 @@
 ## 📁 Folder Structure
 
 ```text
-codex-agents-kit/
+codex-cli-ultimate/
 ├── config/                 # Profile configurations (.toml)
 │   └── profiles/           # Custom user profiles
 ├── prompts/                # Prompt library per language/framework

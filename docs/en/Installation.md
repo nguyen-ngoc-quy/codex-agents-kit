@@ -45,7 +45,7 @@ Restart your terminal or run:
 ### Step 1: Grant execute permissions
 Open a terminal and run:
 ```bash
-chmod +x ./scripts/install.sh ./scripts/switch-profile.sh ./scripts/doctor.sh ./scripts/update.sh ./scripts/benchmark.sh
+chmod +x ./scripts/install.sh ./scripts/switch-profile.sh ./scripts/doctor.sh ./scripts/update.sh ./scripts/benchmark.sh ./scripts/init-project.sh ./scripts/load-agent.sh
 ```
 
 ### Step 2: Run the install script

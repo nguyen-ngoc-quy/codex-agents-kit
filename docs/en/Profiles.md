@@ -16,9 +16,9 @@ Uses free models through the OpenRouter gateway. Ideal for developers who want z
 
 ### 2. Premium Profile (`config/premium.toml`)
 Uses top-tier commercial models via your personal API keys.
-- **Claude 3.5 Sonnet**: Best for programming and complex structural analysis
+- **Claude Sonnet 4 / Opus 4.8**: Best for programming and complex structural analysis
 - **GPT-4o / GPT-4o mini**: Fast response times, high reliability
-- **Gemini 1.5 Pro**: Optimized for very large codebase context handling
+- **Gemini 2.5 Pro**: Optimized for very large codebase context handling
 
 ---
 

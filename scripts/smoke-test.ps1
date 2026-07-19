@@ -9,6 +9,7 @@ $failed = 0
 
 function Test-Check {
     param([string]$Name, [scriptblock]$Block, [bool]$Critical = $false)
+    $result = $false
     Write-Host -NoNewline "  $Name ... "
     try {
         $result = & $Block

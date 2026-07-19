@@ -25,7 +25,7 @@ Bản lộ trình phát triển và hoàn thiện Codex CLI Ultimate Starter Kit
 - [x] Thêm cơ chế loading agent config từ CLI (ví dụ: `codex agent architect`).
 
 ### v0.4 — Prompt Library ⚡
-- [x] Phát triển các prompt mẫu cho ASP.NET, Flutter, Unity, SQL, Docker & DevOps, Clean Code, Testing.
+- [x] Phát triển các prompt mẫu cho ASP.NET, Flutter, Unity, SQL, Docker & DevOps, Clean Code, Code Review, Testing.
 - [x] Bổ sung prompt cho React/Next.js, Python/Django, Go.
 - [x] Áp dụng prompt versioning và tự động cập nhật từ repo.
 

@@ -57,7 +57,7 @@ Hãy thiết kế concurrent workflow cho [tác_vụ] bằng Go:
 Prompt viết test cho Go code:
 ```text
 Hãy viết test cho package [tên_package]:
-- Unit test: table-driven tests (tt *testing.T).
+- Unit test: table-driven tests (t *testing.T).
 - Mocking: testify/mock hoặc mockgen cho interfaces.
 - Integration test: testcontainers-go cho database/Redis.
 - HTTP test: httptest.NewServer, httptest.NewRequest.

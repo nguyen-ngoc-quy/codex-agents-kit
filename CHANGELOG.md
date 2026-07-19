@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **P6.3 — CI Expansion**: Added smoke-test job to CI workflow (runs `smoke-test.sh`). Added macOS (`macos-latest`) to install-test matrix. New `release.yml` workflow auto-creates GitHub Release on tag push (extracts changelog from CHANGELOG.md).
 - **P6.4 — Context7 Auto-Fetch**: `scripts/fetch-docs.ps1` + `scripts/fetch-docs.sh` — downloads framework docs (ASP.NET, Flutter, Unity) for offline AI context. Registered as `codex fetch-docs <framework>`.
 - **P6.5 — Agent Injection vào Profiles**: Added `# recommended_agent:` to all 5 TOML profiles. `switch-profile` scripts now detect and display the recommended agent after switching.
-- **P6.6 — Prompt Versioning**: Added `> Version: 0.1.5 | Last updated: 2026-07-16` headers to all 11 prompt files and 7 agent files. Smoke tests validate version headers exist.
+- **P6.6 — Prompt Versioning**: Added `> Version: 0.1.6 | Last updated: 2026-07-17` headers to all 11 prompt files and 7 agent files. Smoke tests validate version headers exist.
 - **P6.7 — VSCode Extension (scaffold)**: Basic extension with 6 commands (doctor, profile switch, benchmark, init, agent, update) — accessible via Command Palette and Explorer context menu.
 
 ### Changed
@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **scripts/smoke-test.ps1**: Expanded from 83 to 118 checks
 - **README.md**: Updated profile list (5 profiles), added English docs table, updated available commands
 - **docs/en/**: 9 new English documentation files
-- **Repo rename**: `codex-cli-ultimate` → `codex-agents-kit`. Updated all GitHub URL references, VS Code extension IDs, README tree, and CONTRIBUTING.md clone URL.
+- **Updated repo references**: Updated GitHub URL references, VS Code extension IDs, and CONTRIBUTING.md clone URL.
 
 ## [0.1.5] - 2026-07-16
 ### Added

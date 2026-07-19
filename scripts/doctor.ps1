@@ -10,6 +10,11 @@ Write-Host "=========================================" -ForegroundColor Cyan
 
 $allPassed = $true
 
+# Init variables for later use
+$content = $null
+$provider = ""
+$model = ""
+
 # ── Helper functions ──────────────────────────────────────────────
 function Write-Check {
     param([string]$Message)
@@ -144,7 +149,7 @@ if ($provider -eq "openrouter") {
     }
 
     $apiKey = [System.Environment]::GetEnvironmentVariable($envKeyName)
-    if (-not $apiKey -or $apiKey -eq "OPENROUTER_API_KEY") {
+    if (-not $apiKey) {
         Write-Fail "Environment variable '$envKeyName' is empty or not set"
         Write-Host "    -> Set it: `$env:$envKeyName = 'sk-or-v1-...'" -ForegroundColor Gray
     } else {

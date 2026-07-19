@@ -3,6 +3,8 @@
 # Runs comprehensive checks on the project installation and environment.
 # Usage: ./scripts/smoke-test.sh
 
+set -euo pipefail
+
 PASSED=0
 FAILED=0
 

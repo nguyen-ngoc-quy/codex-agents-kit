@@ -79,7 +79,8 @@ for URL in "${URLS[@]}"; do
     OUTFILE="$OUT_DIR/$FILENAME"
 
     echo "  Fetching: $URL"
-    if curl -sL -o "$OUTFILE" --max-time 30 "$URL" 2>/dev/null; then
+    HTTP_CODE=$(curl -sL -o "$OUTFILE" -w "%{http_code}" --max-time 30 "$URL" 2>/dev/null || echo "000")
+    if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
         echo "    ✅ Saved to: $OUTFILE"
         SUCCESS=$((SUCCESS + 1))
     else

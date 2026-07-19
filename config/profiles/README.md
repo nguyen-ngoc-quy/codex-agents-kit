@@ -19,4 +19,4 @@ Tạo profile cấu hình riêng cho Codex CLI bằng cách đặt file `.toml` 
 
 - Tên profile là tên file (không có `.toml`)
 - API keys luôn được đọc từ **environment variables**, không hardcode trong file `.toml`
-- Các profile có sẵn: `free`, `premium`, `local`
+- Các profile có sẵn: `free`, `premium`, `local`, `ollama`, `openrouter`

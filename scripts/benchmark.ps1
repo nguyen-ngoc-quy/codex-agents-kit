@@ -80,7 +80,11 @@ try {
     
     # Calculate approximate metrics
     $tokens = $responseText.Split(" ").Count + 5 # Rough estimate
-    $tokensPerSec = [Math]::Round(($tokens / ($duration / 1000)), 1)
+    if ($duration -gt 0) {
+        $tokensPerSec = [Math]::Round(($tokens / ($duration / 1000)), 1)
+    } else {
+        $tokensPerSec = 0
+    }
     Write-Host "  🚀 Speed (Est.)   : $tokensPerSec tokens/sec" -ForegroundColor Yellow
 } catch {
     $stopwatch.Stop()

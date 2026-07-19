@@ -110,7 +110,7 @@ if [ "$PROVIDER" = "openrouter" ]; then
     API_KEY="${!ENV_KEY_NAME}"
 
     echo -n "  API Key... "
-    if [ -z "$API_KEY" ] || [ "$API_KEY" = "OPENROUTER_API_KEY" ]; then
+    if [ -z "$API_KEY" ]; then
         fail "Environment variable '$ENV_KEY_NAME' is empty or not set"
         echo "    -> export $ENV_KEY_NAME='sk-or-v1-...'"
     else
@@ -161,8 +161,8 @@ for PKG in \
     "@hypnosis/docker-mcp-server" \
     "@playwright/mcp"; do
     echo -n "  $PKG... "
-    # --no-install skips download, just checks cache
-    if npx --no-install "$PKG" --help >/dev/null 2>&1; then
+    # Check if package is already cached (no side effects)
+    if npm ls -g "$PKG" >/dev/null 2>&1; then
         ok "cached"
     else
         warn "not cached (will download on first use)"

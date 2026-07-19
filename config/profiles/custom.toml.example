@@ -5,7 +5,8 @@
 # ── Provider ─────────────────────────────────────────────────────
 # Supported providers: openrouter, openai, anthropic, ollama
 model_provider = "openrouter"
-model = "your-model-name"
+model = "qwen/qwen-2.5-coder-32b-instruct"  # Replace with your model name
+# Examples: "gpt-4o", "claude-sonnet-4-20250514", "qwen/qwen-2.5-coder-32b-instruct", "gemini-2.0-flash"
 
 [model_providers.openrouter]
 name = "My Custom Profile"
@@ -25,7 +26,25 @@ sandbox = "unelevated"
 [plugins."test-android-apps@openai-curated"]
 enabled = true
 
+[plugins."visualize@openai-bundled"]
+enabled = true
+
 [plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
 enabled = true
 
 # ── MCP Servers ──────────────────────────────────────────────────
@@ -38,12 +57,23 @@ args = ["-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
 
 [mcp_servers.git]
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-git"]
+args = ["-y", "@cyanheads/git-mcp-server"]
+
+[mcp_servers.github]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+# Set your GitHub token via env var, then uncomment:
+# [mcp_servers.github.env]
+# GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
 
 [mcp_servers.docker]
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-docker"]
+args = ["-y", "@hypnosis/docker-mcp-server"]
 
 [mcp_servers.playwright]
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-playwright"]
+args = ["-y", "@playwright/mcp"]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]

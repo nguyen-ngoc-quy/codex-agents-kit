@@ -13,18 +13,20 @@ function findCodexRoot() {
     const workspaceFolders = vscode.workspace.workspaceFolders;
     if (!workspaceFolders) return null;
 
-    const root = workspaceFolders[0].uri.fsPath;
-    // Check if we're in the codex-agents-kit repo
-    if (fs.existsSync(path.join(root, 'bin', 'codex.ps1'))) {
-        return root;
-    }
-    // Search parent directories for the bin/codex.ps1 marker
-    let dir = root;
-    while (dir !== path.parse(dir).root) {
-        if (fs.existsSync(path.join(dir, 'bin', 'codex.ps1'))) {
-            return dir;
+    // Check all workspace folders (supports multi-root workspaces)
+    for (const folder of workspaceFolders) {
+        const root = folder.uri.fsPath;
+        if (fs.existsSync(path.join(root, 'bin', 'codex.ps1'))) {
+            return root;
         }
-        dir = path.dirname(dir);
+        // Search parent directories for the bin/codex.ps1 marker
+        let dir = root;
+        while (dir !== path.parse(dir).root) {
+            if (fs.existsSync(path.join(dir, 'bin', 'codex.ps1'))) {
+                return dir;
+            }
+            dir = path.dirname(dir);
+        }
     }
     // Fallback to user home .codex directory
     const homeDir = process.env.USERPROFILE || process.env.HOME;
@@ -35,11 +37,16 @@ function findCodexRoot() {
 }
 
 /**
- * Run a Codex script in the terminal.
+ * Reuse or create a terminal by name to avoid orphan instances.
  * Escapes all arguments to prevent shell injection.
  */
 function runInTerminal(command, name) {
-    const terminal = vscode.window.createTerminal({ name: `Codex: ${name}` });
+    const terminalName = `Codex: ${name}`;
+    // Reuse existing terminal with the same name instead of creating new ones
+    let terminal = vscode.window.terminals.find(t => t.name === terminalName);
+    if (!terminal) {
+        terminal = vscode.window.createTerminal({ name: terminalName });
+    }
     terminal.show();
     terminal.sendText(command);
 }

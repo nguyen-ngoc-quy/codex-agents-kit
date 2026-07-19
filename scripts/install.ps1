@@ -208,7 +208,7 @@ if ($inCI) {
     try {
         $response = Read-Host "Add bin/ to PATH? (Y/N, default: Y)"
     } catch {
-        $response = ""
+        $response = "N"
     }
 
     if ($response -eq "" -or $response -match "^[Yy]") {

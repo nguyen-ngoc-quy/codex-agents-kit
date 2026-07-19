@@ -14,6 +14,9 @@ Guide to leveraging the Prompt Library designed for popular technology stacks.
 - **Unity ([unity.md](../../prompts/unity.md))**: SOLID-compliant scripts, ScriptableObject design, memory optimization via Object Pooling, Zenject Dependency Injection.
 - **SQL Server ([sql.md](../../prompts/sql.md))**: Slow query optimization, smart index design, safe SQL migrations, execution plan analysis.
 - **Docker & DevOps ([docker.md](../../prompts/docker.md))**: Lightweight multi-stage Dockerfiles, production docker-compose, container health checks.
+- **Clean Code ([clean-code.md](../../prompts/clean-code.md))**: Clean code principles — naming, function structure, error handling, effective comments.
+- **Code Review ([review.md](../../prompts/review.md))**: Comprehensive review checklist — security, performance, architecture, maintainability.
+- **Testing ([testing.md](../../prompts/testing.md))**: General testing strategies — unit tests, integration tests, end-to-end, mock/stub patterns.
 
 ---
 

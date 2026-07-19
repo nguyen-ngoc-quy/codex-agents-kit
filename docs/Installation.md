@@ -44,7 +44,7 @@ Sau đó restart terminal hoặc chạy:
 ### Bước 1: Cấp quyền thực thi
 Mở terminal và chạy lệnh:
 ```bash
-chmod +x ./scripts/install.sh ./scripts/switch-profile.sh ./scripts/doctor.sh ./scripts/update.sh ./scripts/benchmark.sh
+chmod +x ./scripts/install.sh ./scripts/switch-profile.sh ./scripts/doctor.sh ./scripts/update.sh ./scripts/benchmark.sh ./scripts/init-project.sh ./scripts/load-agent.sh
 ```
 
 ### Bước 2: Chạy script cài đặt

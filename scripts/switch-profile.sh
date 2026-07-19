@@ -10,6 +10,12 @@ if [ -z "$PROFILE_NAME" ]; then
     exit 1
 fi
 
+# Validate profile name (alphanumeric, dots, hyphens, underscores only)
+if ! echo "$PROFILE_NAME" | grep -qE '^[a-zA-Z0-9._-]+$'; then
+    echo "❌ Error: Profile name '$PROFILE_NAME' contains invalid characters."
+    exit 1
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE_ROOT="$(dirname "$SCRIPT_DIR")"
 PROFILE_FILE="$WORKSPACE_ROOT/config/$PROFILE_NAME.toml"
@@ -35,8 +41,9 @@ fi
 
 cp "$PROFILE_FILE" "$CONFIG_FILE"
 
-# Replace placeholders with actual workspace path
-sed "s|__WORKSPACE_ROOT__|$WORKSPACE_ROOT|g" "$CONFIG_FILE" > "$CONFIG_FILE.tmp"
+# Replace placeholders with actual workspace path (escape sed delimiter)
+ESCAPED_WORKSPACE_ROOT=$(printf '%s' "$WORKSPACE_ROOT" | sed 's/|/\\|/g')
+sed "s|__WORKSPACE_ROOT__|$ESCAPED_WORKSPACE_ROOT|g" "$CONFIG_FILE" > "$CONFIG_FILE.tmp"
 mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
 
 echo "Successfully switched to '$PROFILE_NAME'!"
