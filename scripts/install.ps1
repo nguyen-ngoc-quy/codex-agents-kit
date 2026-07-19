@@ -250,11 +250,12 @@ Write-Host "âœ… Added to current session PATH (temporary)." -ForegroundColor
 Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host "ðŸŽ‰ Setup Complete!" -ForegroundColor Green
 Write-Host "Available commands:" -ForegroundColor Yellow
-Write-Host "  codex profile free        - Switch to free OpenRouter" -ForegroundColor White
-Write-Host "  codex profile premium     - Switch to premium OpenRouter" -ForegroundColor White
-Write-Host "  codex profile local       - Switch to Ollama (local)" -ForegroundColor White
-Write-Host "  codex profile ollama      - Switch to ollama.toml config" -ForegroundColor White
-Write-Host "  codex profile openrouter  - Switch to openrouter.toml config" -ForegroundColor White
+Write-Host "  codex profile free           - Switch to free OpenRouter" -ForegroundColor White
+Write-Host "  codex profile premium        - Switch to premium OpenRouter" -ForegroundColor White
+Write-Host "  codex profile local          - Switch to Ollama (local)" -ForegroundColor White
+Write-Host "  codex profile ollama         - Switch to ollama.toml config" -ForegroundColor White
+Write-Host "  codex profile openrouter     - Switch to openrouter.toml config" -ForegroundColor White
+Write-Host "  codex profile opencode-zen   - Switch to OpenCode Zen (free)" -ForegroundColor White
 Write-Host "  codex doctor         - Run diagnostics" -ForegroundColor White
 Write-Host "  codex init <name>    - Scaffold a new project" -ForegroundColor White
 Write-Host "  codex benchmark      - Benchmark model latency" -ForegroundColor White

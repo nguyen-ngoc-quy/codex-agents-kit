@@ -106,6 +106,7 @@ module.exports = function (app, ctx) {
           checkEnvKey('OPENAI_API_KEY'),
           checkEnvKey('ANTHROPIC_API_KEY'),
           checkEnvKey('GITHUB_PERSONAL_ACCESS_TOKEN'),
+          checkEnvKey('OPENCODE_API_KEY'),
         ],
         dependencies: { node, npm, git, codex },
         connectivity,
@@ -124,6 +125,7 @@ module.exports = function (app, ctx) {
       'OPENAI_API_KEY',
       'ANTHROPIC_API_KEY',
       'GITHUB_PERSONAL_ACCESS_TOKEN',
+      'OPENCODE_API_KEY',
       'CODEX_CLI_PATH',
     ];
     res.json(keys.map(k => ({ name: k, set: !!process.env[k] })));
