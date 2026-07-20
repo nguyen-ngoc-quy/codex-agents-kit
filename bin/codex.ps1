@@ -78,7 +78,8 @@ if ($RemainingArgs.Count -gt 0) {
             Write-Host "  codex init <name> [tpl] Scaffold a new project" -ForegroundColor White
             Write-Host "  codex agent <name>      Load agent instructions (architect, backend, ...)" -ForegroundColor White
             Write-Host "  codex fetch-docs <fw>   Download framework docs for offline context" -ForegroundColor White
-            Write-Host "  codex ui [--port=N]     Start Admin Web UI" -ForegroundColor White
+            Write-Host "  codex ui [--port=N] [-d] Start Admin Web UI (use Ctrl+C or 'codex ui stop' to stop)" -ForegroundColor White
+            Write-Host "  codex ui stop           Stop the Admin Web UI server" -ForegroundColor White
             Write-Host "  codex openrouter [opts] List free models from OpenRouter" -ForegroundColor White
             Write-Host "                         (use --json for JSON, --all for all models)" -ForegroundColor Gray
             Write-Host "  codex config <cmd>      Manage configuration (list, get, set, set-model, set-provider, edit)" -ForegroundColor White
@@ -107,7 +108,19 @@ if ($RemainingArgs.Count -gt 0) {
         "agent"     { Invoke-Script "load-agent" }
         "fetch-docs" { Invoke-Script "fetch-docs" }
         "ui" {
-            & (Join-Path $WorkspaceRoot "scripts" "start-ui.ps1") $RemainingArgs[1..($RemainingArgs.Count - 1)]
+            $subCmd = if ($RemainingArgs.Count -ge 2) { $RemainingArgs[1] } else { "" }
+            $uiScript = Join-Path $WorkspaceRoot "scripts" "start-ui.ps1"
+            if ($subCmd -eq "stop") {
+                & $uiScript -Stop
+            } elseif ($subCmd -eq "start") {
+                # Forward remaining args (e.g. --port=3457, -d)
+                $rest = $RemainingArgs[2..($RemainingArgs.Count - 1)]
+                & $uiScript @rest
+            } else {
+                # Forward as-is (supports -d, --port=...)
+                $rest = $RemainingArgs[1..($RemainingArgs.Count - 1)]
+                & $uiScript @rest
+            }
         }
         "openrouter" {
             & (Join-Path $WorkspaceRoot "scripts" "list-openrouter-models.ps1") $RemainingArgs[1..($RemainingArgs.Count - 1)]
