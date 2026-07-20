@@ -206,13 +206,13 @@ switch ($Command) {
         $content = $content -replace '(?m)^model_provider\s*=\s*"[^"]*"', "model_provider = `"$sectionProvider`""
 
         $providerHeader = "[model_providers.$sectionProvider]"
-        if ($content -match "(?m)^\[model_providers\.$oldSection\]") {
-            $content = $content -replace "(?m)^\[model_providers\.$oldSection\]", $providerHeader
-            # Also update name, base_url, env_key inside the existing block
-            $content = $content -replace '(?m)^name\s*=\s*"[^"]*"', "name = `"$($defaults.name)`""
-            $content = $content -replace '(?m)^base_url\s*=\s*"[^"]*"', "base_url = `"$($defaults.base_url)`""
-            $content = $content -replace '(?m)^env_key\s*=\s*"[^"]*"', "env_key = `"$($defaults.env_key)`""
+        # Replace the entire model_providers block in one shot (avoid global name/base_url/env_key replace)
+        $blockPattern = "(?m)^\[model_providers\.$oldSection\][^\n]*\nname\s*=\s*""[^""]*""\nbase_url\s*=\s*""[^""]*""\nenv_key\s*=\s*""[^""]*"""
+        $blockReplacement = "$providerHeader`nname = `"$($defaults.name)`"`nbase_url = `"$($defaults.base_url)`"`nenv_key = `"$($defaults.env_key)`""
+        if ($content -match $blockPattern) {
+            $content = $content -replace $blockPattern, $blockReplacement
         } else {
+            # No existing block — append one
             $content += "`n$providerHeader`n"
             $content += "name = `"$($defaults.name)`"`n"
             $content += "base_url = `"$($defaults.base_url)`"`n"
