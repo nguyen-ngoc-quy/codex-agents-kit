@@ -179,12 +179,12 @@ case "$COMMAND" in
         content=$(get_active_config)
         backup_config
 
-        # Set model_provider (use section_name for opencode-zen → openai)
-        content=$(echo "$content" | sed "s|^model_provider[[:space:]]*=[[:space:]]*\"[^\"]*\"|model_provider = \"${section_name}\"|")
-
-        # Get current provider value to target its section specifically
+        # Capture the OLD provider BEFORE modifying model_provider
         local current_provider
         current_provider=$(echo "$content" | grep -E '^model_provider[[:space:]]*=' | head -1 | sed 's/^[^"]*"\([^"]*\)".*/\1/')
+
+        # Set model_provider (use section_name for opencode-zen → openai)
+        content=$(echo "$content" | sed "s|^model_provider[[:space:]]*=[[:space:]]*\"[^\"]*\"|model_provider = \"${section_name}\"|")
 
         # Replace or add provider block
         if echo "$content" | grep -qE '^\[model_providers\.'; then
@@ -192,10 +192,10 @@ case "$COMMAND" in
             local old_section
             old_section=$(to_section_name "$current_provider")
             content=$(echo "$content" | sed "s|^\[model_providers\.${old_section}\]|[model_providers.${section_name}]|")
-            # Update name, base_url, env_key inside the block
-            content=$(echo "$content" | sed "s|^name[[:space:]]*=[[:space:]]*\"[^\"]*\"|name = \"${name}\"|")
-            content=$(echo "$content" | sed "s|^base_url[[:space:]]*=[[:space:]]*\"[^\"]*\"|base_url = \"${base_url}\"|")
-            content=$(echo "$content" | sed "s|^env_key[[:space:]]*=[[:space:]]*\"[^\"]*\"|env_key = \"${env_key}\"|")
+            # Update name, base_url, env_key only inside the model_providers block
+            content=$(echo "$content" | sed "/^\[model_providers\.${section_name}\]/,/^\[/ s|^name[[:space:]]*=[[:space:]]*\"[^\"]*\"|name = \"${name}\"|")
+            content=$(echo "$content" | sed "/^\[model_providers\.${section_name}\]/,/^\[/ s|^base_url[[:space:]]*=[[:space:]]*\"[^\"]*\"|base_url = \"${base_url}\"|")
+            content=$(echo "$content" | sed "/^\[model_providers\.${section_name}\]/,/^\[/ s|^env_key[[:space:]]*=[[:space:]]*\"[^\"]*\"|env_key = \"${env_key}\"|")
         else
             content="$content
 [model_providers.${section_name}]

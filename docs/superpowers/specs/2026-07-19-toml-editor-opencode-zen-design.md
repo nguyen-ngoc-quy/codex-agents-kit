@@ -168,7 +168,7 @@ codex config list
   → Output: danh sách key=value của profile đang active (model_provider, model, base_url, env_key, tools)
 
 codex config get <key>
-  → Output: giá trị của key (VD: "model": "qwen/qwen-2.5-coder-32b-instruct:free")
+→ Output: giá trị của key (VD: "model": "qwen/qwen-2.5-coder-32b-instruct:free")
 
 codex config set <key> <value>
   → Set key/value vào active profile (~/.codex/config.toml)
