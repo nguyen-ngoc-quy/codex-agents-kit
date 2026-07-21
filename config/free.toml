@@ -1,14 +1,28 @@
-# Codex Profile: free
+﻿# Codex Profile: free
 # Uses OpenRouter Free API with auto-fallback
 # recommended_agent: debugger
 
 model_provider = "openrouter"
-model = "qwen/qwen-2.5-coder-32b-instruct:free"
+model = "cohere/north-mini-code:free"
 
 [model_providers.openrouter]
 name = "OpenRouter AI (Free)"
 base_url = "https://openrouter.ai/api/v1"
 env_key = "OPENROUTER_API_KEY"
+[model_providers.openrouter.query_params]
+models = [
+  "cohere/north-mini-code:free",
+  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+  "google/lyria-3-pro-preview",
+  "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
+  "google/lyria-3-clip-preview",
+  "google/gemma-4-31b-it:free",
+  "poolside/laguna-xs-2.1:free",
+  "poolside/laguna-m.1:free",
+  "google/gemma-4-26b-a4b-it:free"
+]
+route = "fallback"
 
 [tools]
 web_search = true
@@ -46,28 +60,25 @@ enabled = true
 # The __WORKSPACE_ROOT__ placeholder is replaced with your project path.
 
 [mcp_servers.filesystem]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
 
 [mcp_servers.git]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-git"]
+command = "uvx"
+args = ["mcp-server-git", "--repository", "__WORKSPACE_ROOT__"]
 
 [mcp_servers.github]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-github"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@modelcontextprotocol/server-github"]
+# Lưu ý: package này đã bị deprecated, xem ghi chú bên dưới
 # Set your GitHub token via env var, then uncomment:
 # [mcp_servers.github.env]
 # GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
 
-[mcp_servers.docker]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-docker"]
-
 [mcp_servers.playwright]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-playwright"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@playwright/mcp@latest"]
 
 [mcp_servers.context7]
-command = "npx"
-args = ["-y", "@context7/mcp-server"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@upstash/context7-mcp"]

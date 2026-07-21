@@ -62,28 +62,25 @@ enabled = true
 # The __WORKSPACE_ROOT__ placeholder is replaced with your project path.
 
 [mcp_servers.filesystem]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@modelcontextprotocol/server-filesystem", "__WORKSPACE_ROOT__"]
 
 [mcp_servers.git]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-git"]
+command = "uvx"
+args = ["mcp-server-git", "--repository", "__WORKSPACE_ROOT__"]
 
 [mcp_servers.github]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-github"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@modelcontextprotocol/server-github"]
+# Lưu ý: package này đã bị deprecated, xem ghi chú bên dưới
 # Set your GitHub token via env var, then uncomment:
 # [mcp_servers.github.env]
 # GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
 
-[mcp_servers.docker]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-docker"]
-
 [mcp_servers.playwright]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-playwright"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@playwright/mcp@latest"]
 
 [mcp_servers.context7]
-command = "npx"
-args = ["-y", "@context7/mcp-server"]
+command = "cmd"
+args = ["/c", "npx", "-y", "@upstash/context7-mcp"]

@@ -240,10 +240,16 @@ env_key = \"${env_key}\""
         $editor "$target"
         ;;
 
+    update-free)
+        echo "Refreshing free model fallback chain..."
+        bash "${WORKSPACE_ROOT}/scripts/generate-free-profile.sh"
+        ;;
+
     help|--help|-h)
         echo "Usage: codex config <command> [args]"
         echo ""
         echo "Commands:"
+        echo "  update-free                   Refresh free model fallback chain from OpenRouter"
         echo "  list                          Show all config fields"
         echo "  get <key>                     Get a config value"
         echo "  set <key> <value>             Set a config value"

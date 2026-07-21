@@ -42,7 +42,7 @@ Copy-Item -Path $profileFile -Destination $configFile -Force
 $configContent = Get-Content $configFile -Raw
 $escapedRoot = $workspaceRoot.ToString().Replace('\', '\\').Replace('"', '\"').Replace('#', '\#')
 $configContent = $configContent.Replace('__WORKSPACE_ROOT__', $escapedRoot)
-Set-Content -Path $configFile -Value $configContent -Force
+Set-Content -Path $configFile -Value $configContent -Encoding UTF8 -Force
 
 Write-Host "Successfully switched to '$ProfileName'!" -ForegroundColor Green
 Write-Host "Active configuration updated at: $configFile" -ForegroundColor Green

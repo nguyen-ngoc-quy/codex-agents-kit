@@ -2,7 +2,7 @@
 # Usage: .\scripts\config.ps1 <command> [args]
 param(
     [Parameter(Position = 0, Mandatory = $true)]
-    [ValidateSet('list', 'get', 'set', 'set-model', 'set-provider', 'edit')]
+    [ValidateSet('list', 'get', 'set', 'set-model', 'set-provider', 'edit', 'update-free')]
     [string]$Command,
 
     [Parameter(ValueFromRemainingArguments = $true)]
@@ -237,7 +237,7 @@ switch ($Command) {
     "edit" {
         $targetFile = $activeConfig
         if ($Args.Count -ge 1) {
-            $profileFile = Join-Path $workspaceRoot "config" "$($Args[0]).toml"
+            $profileFile = Join-Path (Join-Path $workspaceRoot "config") "$($Args[0]).toml"
             if (Test-Path $profileFile) {
                 $targetFile = $profileFile
             } else {
@@ -254,5 +254,11 @@ switch ($Command) {
         }
         Write-Host "Opening $targetFile with $editor..." -ForegroundColor Cyan
         & $editor $targetFile
+    }
+
+    "update-free" {
+        Write-Host "Refreshing free model fallback chain..." -ForegroundColor Cyan
+        $genScript = Join-Path (Join-Path $workspaceRoot "scripts") "generate-free-profile.ps1"
+        & $genScript
     }
 }

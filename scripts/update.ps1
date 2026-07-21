@@ -21,7 +21,20 @@ if (Test-Path (Join-Path $PSScriptRoot "..\.git")) {
     Write-Host "Not a git repository, skipping git pull." -ForegroundColor Gray
 }
 
-# 2. Inform user about manual updates if needed
+# 2. Regenerate free model fallback chain
+Write-Host "Generating free model fallback chain..." -ForegroundColor Gray
+try {
+    & (Join-Path $PSScriptRoot "generate-free-profile.ps1") -ErrorAction SilentlyContinue
+    if ($?) {
+        Write-Host "Free model fallback chain updated." -ForegroundColor Green
+    } else {
+        Write-Host "Could not update free model chain (API may be unavailable). Using cached list." -ForegroundColor Yellow
+    }
+} catch {
+    Write-Host "Could not update free model chain: $_" -ForegroundColor Yellow
+}
+
+# 3. Inform user about manual updates if needed
 Write-Host "Synchronizing templates..." -ForegroundColor Gray
 
 $codexHome = Join-Path $env:USERPROFILE ".codex"
