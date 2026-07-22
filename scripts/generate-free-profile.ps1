@@ -179,14 +179,12 @@ for ($i = 0; $i -lt $modelIds.Count; $i++) {
 }
 
 # -- Step 3: Build the query_params TOML block --
-$modelsToml = $modelIds | ForEach-Object { "  `"$_`"" }
-$modelsBody = $modelsToml -join (",`n")
+# models is a comma-separated string per Codex CLI map<string,string> spec
+$modelsStr = $modelIds -join ","
 $queryParamsBlock = @"
 
 [model_providers.openrouter.query_params]
-models = [
-$modelsBody
-]
+models = "$modelsStr"
 route = "fallback"
 "@
 

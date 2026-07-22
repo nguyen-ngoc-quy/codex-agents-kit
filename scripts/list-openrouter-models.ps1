@@ -80,10 +80,9 @@ try {
             [PSCustomObject]@{ id = $_.id; score = $score }
         } | Sort-Object -Property score -Descending | Select-Object -First $MaxFallback
 
-        Write-Host "# Auto-generated fallback model list"
-        Write-Host "models = ["
-        $scored | ForEach-Object { Write-Host "  `"$($_.id)`"," }
-        Write-Host "]"
+        Write-Host "# Auto-generated fallback model list (comma-separated per Codex CLI spec)"
+        $modelsStr = ($scored | ForEach-Object { $_.id }) -join ","
+        Write-Host "models = `"$modelsStr`""
         Write-Host "route = `"fallback`""
         return
     }

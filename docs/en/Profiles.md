@@ -60,14 +60,11 @@ graph TD;
 
 ### query_params Configuration
 
+> **Note**: Codex CLI requires `query_params` as `map<string, string>`, so `models` must be a **comma-separated string**, not an array.
+
 ```toml
 [model_providers.openrouter.query_params]
-models = [
-  "cohere/north-mini-code:free",          # Coding model (highest priority)
-  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",  # Reasoning model
-  "nvidia/nemotron-3-ultra-550b-a55b:free",
-  # ... more models
-]
+models = "cohere/north-mini-code:free,nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free,nvidia/nemotron-3-ultra-550b-a55b:free"
 route = "fallback"
 ```
 

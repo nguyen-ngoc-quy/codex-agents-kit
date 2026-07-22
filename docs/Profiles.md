@@ -60,14 +60,11 @@ graph TD;
 
 ### Cấu hình query_params
 
+> **Lưu ý**: Codex CLI yêu cầu `query_params` là `map<string, string>`, vì vậy `models` phải là một chuỗi phân cách bằng dấu phẩy, **không phải** mảng (array).
+
 ```toml
 [model_providers.openrouter.query_params]
-models = [
-  "cohere/north-mini-code:free",          # Coding model (ưu tiên cao nhất)
-  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",  # Reasoning model
-  "nvidia/nemotron-3-ultra-550b-a55b:free",
-  # ... thêm model khác
-]
+models = "cohere/north-mini-code:free,nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free,nvidia/nemotron-3-ultra-550b-a55b:free"
 route = "fallback"
 ```
 

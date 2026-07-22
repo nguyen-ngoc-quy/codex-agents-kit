@@ -113,13 +113,14 @@ for i in "${!MODEL_IDS[@]}"; do
   echo "   $((i+1)). ${MODEL_IDS[$i]}  [$LABEL]"
 done
 
-# Build TOML block
+# Build TOML block (models as comma-separated string per Codex CLI map<string,string> spec)
 QUERY_PARAMS_BLOCK=$(cat <<EOF
 
 [model_providers.openrouter.query_params]
-models = [
-$(printf '  "%s",\n' "${MODEL_IDS[@]}" | sed '$s/,$//')
-]
+models = "$(
+  IFS=,
+  printf '%s' "${MODEL_IDS[*]}"
+)"
 route = "fallback"
 EOF
 )
